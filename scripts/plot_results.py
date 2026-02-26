@@ -3,11 +3,13 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import pandas as pd  # noqa: E402
@@ -17,8 +19,58 @@ if str(_root / "src") not in sys.path:
     sys.path.insert(0, str(_root / "src"))
 
 
+def _pick_results_dir(root: Path, run: str | None) -> Path:
+    """Choose which results directory to visualise.
+
+    - If *run* is provided → root / run.
+    - Else, if any subdirectories under *root* contain search_n*.jsonl,
+      pick the most recently modified such directory.
+    - Else, fall back to *root* itself.
+    """
+    if run:
+        return root / run
+
+    root = root.resolve()
+    candidates: list[tuple[float, Path]] = []
+
+    for sub in root.iterdir():
+        if not sub.is_dir():
+            continue
+        if any(sub.glob("search_n*.jsonl")):
+            candidates.append((sub.stat().st_mtime, sub))
+
+    if candidates:
+        candidates.sort(key=lambda x: x[0], reverse=True)
+        return candidates[0][1]
+
+    return root
+
+
 def main() -> None:
-    results_dir = Path("results")
+    ap = argparse.ArgumentParser(
+        description="Plot AEAS search results saved by run_search.py.",
+    )
+    ap.add_argument(
+        "--root",
+        type=str,
+        default="results",
+        help="Root directory containing run subdirectories.",
+    )
+    ap.add_argument(
+        "--run",
+        type=str,
+        default=None,
+        help="Specific run subdirectory under --root to plot. "
+        "If omitted, the most recent run is used.",
+    )
+    args = ap.parse_args()
+
+    root = Path(args.root)
+    if not root.exists():
+        print(f"No such results root: {root}")
+        return
+
+    results_dir = _pick_results_dir(root, args.run)
     figures_dir = results_dir / "figures"
     figures_dir.mkdir(parents=True, exist_ok=True)
 
@@ -31,8 +83,13 @@ def main() -> None:
                     records.append(json.loads(line))
 
     if not records:
-        print("No results found in results/. Run run_search.py first.")
+        print(
+            f"No results found in {results_dir}. "
+            "Run scripts/run_search.py first.",
+        )
         return
+
+    print(f"Using results from: {results_dir}")
 
     df = pd.DataFrame(records)
     ns = sorted(df["n"].unique())
@@ -61,7 +118,14 @@ def main() -> None:
     for i, n in enumerate(ns):
         ax = axes[0][i]
         sub = df[df["n"] == n]
-        ax.semilogy(sub["nodes"], sub["best_error"], "o", alpha=0.45, ms=3.5, color="C1")
+        ax.semilogy(
+            sub["nodes"],
+            sub["best_error"],
+            "o",
+            alpha=0.45,
+            ms=3.5,
+            color="C1",
+        )
         ax.set_xlabel("node count")
         ax.set_ylabel("|error|")
         ax.set_title(f"cos(2π/{n})")

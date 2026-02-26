@@ -24,8 +24,12 @@ pip install -e .
 # 3. Run the search (beam search, n=7,11,13, depth up to 3)
 python scripts/run_search.py --n 7 11 13 --max_depth 3 --max_nodes 15 --beam_width 2000
 
-# 4. Generate plots
+# Each invocation now creates a dedicated run directory under results/,
+# e.g. results/n7-11-13_d3_nodes15_beam2000_YYYYMMDD-HHMMSS/
+
+# 4. Generate plots for the latest run (or pass --run <name> explicitly)
 python scripts/plot_results.py
+python scripts/plot_results.py --run n7-11-13_d3_nodes15_beam2000_YYYYMMDD-HHMMSS
 
 # 5. Run the test suite
 pytest tests/ -v

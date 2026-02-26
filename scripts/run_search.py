@@ -41,8 +41,23 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--mode", choices=["beam", "baseline"], default="beam")
     ap.add_argument(
-        "--const_set", type=str, default="0,1,-1,1/2,2,3/2,3,1/4,1/3",
+        "--const_set",
+        type=str,
+        default="0,1,-1,1/2,2,3/2,3,1/4,1/3",
         help="Comma-separated rational constants",
+    )
+    ap.add_argument(
+        "--output_root",
+        type=str,
+        default="results",
+        help="Root directory for saving run outputs (one subdir per run).",
+    )
+    ap.add_argument(
+        "--run_name",
+        type=str,
+        default=None,
+        help="Optional name for this run (subdirectory under output_root). "
+        "If omitted, a timestamped name based on key parameters is used.",
     )
     ap.add_argument("--top_k", type=int, default=10)
     args = ap.parse_args()
@@ -50,8 +65,28 @@ def main() -> None:
     const_set = _parse_const_set(args.const_set)
     console = Console()
 
-    results_dir = Path("results")
-    results_dir.mkdir(exist_ok=True)
+    # ── determine run directory ──
+    from datetime import datetime
+
+    output_root = Path(args.output_root)
+    output_root.mkdir(parents=True, exist_ok=True)
+
+    if args.run_name:
+        run_name = args.run_name
+    else:
+        n_part = "-".join(str(n) for n in args.n)
+        ts = datetime.now().strftime("%Y%m%d-%H%M%S")
+        run_name = (
+            f"n{n_part}_d{args.max_depth}_nodes{args.max_nodes}_"
+            f"beam{args.beam_width}_{ts}"
+        )
+
+    results_dir = output_root / run_name
+    results_dir.mkdir(parents=True, exist_ok=True)
+
+    console.print(
+        f"[bold magenta]Run directory:[/bold magenta] {results_dir}",
+    )
 
     all_records: list[dict] = []
 
