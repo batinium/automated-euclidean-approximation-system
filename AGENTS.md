@@ -52,8 +52,12 @@ python scripts/run_search.py --n 7 11 13 --max_depth 3 --max_nodes 15 --beam_wid
 # Baseline (exhaustive, very slow for large limits)
 python scripts/run_search.py --mode baseline --max_depth 1 --max_nodes 7
 
-# Generate plots from results/ JSONL files
+# Each invocation creates a dedicated run directory under results/,
+# e.g. results/n7-11-13_d3_nodes15_beam2000_YYYYMMDD-HHMMSS/
+
+# Generate plots for the latest run (or pass --run <name> explicitly)
 python scripts/plot_results.py
+python scripts/plot_results.py --run n7-11-13_d3_nodes15_beam2000_YYYYMMDD-HHMMSS
 
 # Tests
 pytest tests/ -v
@@ -72,6 +76,15 @@ pytest tests/ -v
 | `--mode` | `beam` | `beam` or `baseline` |
 | `--const_set` | `0,1,-1,1/2,2,3/2,3,1/4,1/3` | Seed rationals (comma-sep) |
 | `--top_k` | `10` | Results displayed per depth level |
+| `--output_root` | `results` | Parent directory for all runs |
+| `--run_name` | *auto* | Optional explicit run subdirectory name |
+
+`scripts/plot_results.py` CLI:
+
+| Flag | Default | Purpose |
+|------|---------|---------|
+| `--root` | `results` | Root containing run subdirectories |
+| `--run` | latest run | Run folder under `--root` to plot |
 
 ## Architecture & core concepts
 
@@ -147,13 +160,22 @@ Sort key everywhere: `(error, node_count, canonical_string)` — fully determini
 
 ### Scripts
 
-`scripts/run_search.py` — parses CLI args, runs search, prints rich tables,
-writes JSONL per-n to `results/search_n{N}.jsonl` and a summary CSV to
-`results/summary.csv`. Also shows a sub-table for best results at each exact
+`scripts/run_search.py` — parses CLI args, determines a **run directory**
+under `results/` (either from `--run_name` or from the parameter set +
+timestamp), writes:
+
+- `run_config.json` — full configuration for the run (all CLI args, run_name,
+  timestamp, paths).
+- `search_n{N}.jsonl` — per-depth top-K results for each n.
+- `summary.csv` — one-row-per-(n, depth) best results.
+
+It also prints rich tables and a sub-table for best results at each exact
 sqrt-depth.
 
-`scripts/plot_results.py` — reads all `results/search_n*.jsonl`, generates
-three matplotlib figures in `results/figures/`:
+`scripts/plot_results.py` — chooses a run directory (explicit `--run` or the
+most recent subdirectory under `--root` with `search_n*.jsonl`) and generates
+three matplotlib figures in `<run>/figures/`:
+
 - `error_vs_depth.png` — semilogy best error vs sqrt depth, one subplot per n.
 - `error_vs_nodes.png` — scatter of error vs node count.
 - `combined_errors.png` — all n values on one axes.

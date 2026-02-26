@@ -125,11 +125,27 @@ cached by `(expression_hash, dps)` for efficiency.
 
 ### Output
 
-| File | Contents |
-|------|----------|
-| `results/search_n{N}.jsonl` | Per-depth top-K results with metadata |
-| `results/summary.csv` | One-row-per-(n, depth) best results |
-| `results/figures/*.png` | Error-vs-depth and error-vs-nodes plots |
+Each invocation of `scripts/run_search.py` writes into its own **run directory**
+under `results/`, for example:
+
+```text
+results/n7-11-13_d3_nodes15_beam2000_20260226-224721/
+  ├── run_config.json      # All CLI args, run_name, timestamp
+  ├── search_n7.jsonl      # Per-depth top-K results for n=7
+  ├── search_n11.jsonl
+  ├── search_n13.jsonl
+  └── summary.csv          # One-row-per-(n, depth) best results
+```
+
+When you run `scripts/plot_results.py` for a given run, it writes figures into
+`<run>/figures/`:
+
+```text
+results/n7-11-13_d3_nodes15_beam2000_20260226-224721/figures/
+  ├── error_vs_depth.png
+  ├── error_vs_nodes.png
+  └── combined_errors.png
+```
 
 ---
 
@@ -146,6 +162,15 @@ cached by `(expression_hash, dps)` for efficiency.
 | `--mode` | `beam` | `beam` or `baseline` |
 | `--const_set` | `0,1,-1,1/2,2,3/2,3,1/4,1/3` | Seed rationals |
 | `--top_k` | `10` | Results printed per depth |
+| `--output_root` | `results` | Parent directory for all runs |
+| `--run_name` | *auto* | Optional explicit run subdirectory name |
+
+`scripts/plot_results.py` has its own small CLI:
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--root` | `results` | Root containing run subdirectories |
+| `--run` | *latest run* | Which run folder under `--root` to plot |
 
 ---
 
