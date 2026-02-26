@@ -46,31 +46,19 @@ def _pick_results_dir(root: Path, run: str | None) -> Path:
     return root
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser(
-        description="Plot AEAS search results saved by run_search.py.",
-    )
-    ap.add_argument(
-        "--root",
-        type=str,
-        default="results",
-        help="Root directory containing run subdirectories.",
-    )
-    ap.add_argument(
-        "--run",
-        type=str,
-        default=None,
-        help="Specific run subdirectory under --root to plot. "
-        "If omitted, the most recent run is used.",
-    )
-    args = ap.parse_args()
+def _iter_run_dirs(root: Path) -> list[Path]:
+    """Return all run directories under *root* that contain search_n*.jsonl."""
+    root = root.resolve()
+    runs: list[Path] = []
+    for sub in sorted(root.iterdir()):
+        if not sub.is_dir():
+            continue
+        if any(sub.glob("search_n*.jsonl")):
+            runs.append(sub)
+    return runs
 
-    root = Path(args.root)
-    if not root.exists():
-        print(f"No such results root: {root}")
-        return
 
-    results_dir = _pick_results_dir(root, args.run)
+def _plot_one_dir(results_dir: Path) -> None:
     figures_dir = results_dir / "figures"
     figures_dir.mkdir(parents=True, exist_ok=True)
 
@@ -153,6 +141,48 @@ def main() -> None:
     fig.savefig(path3, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved {path3}")
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(
+        description="Plot AEAS search results saved by run_search.py.",
+    )
+    ap.add_argument(
+        "--root",
+        type=str,
+        default="results",
+        help="Root directory containing run subdirectories.",
+    )
+    ap.add_argument(
+        "--run",
+        type=str,
+        default=None,
+        help="Specific run subdirectory under --root to plot. "
+        "If omitted (and --all-runs is not given), the most recent run is used.",
+    )
+    ap.add_argument(
+        "--all-runs",
+        action="store_true",
+        help="Generate figures for every run directory under --root that "
+        "contains search_n*.jsonl.",
+    )
+    args = ap.parse_args()
+
+    root = Path(args.root)
+    if not root.exists():
+        print(f"No such results root: {root}")
+        return
+
+    if args.all_runs:
+        run_dirs = _iter_run_dirs(root)
+        if not run_dirs:
+            print(f"No run directories with search_n*.jsonl under {root}")
+            return
+        for rd in run_dirs:
+            _plot_one_dir(rd)
+    else:
+        results_dir = _pick_results_dir(root, args.run)
+        _plot_one_dir(results_dir)
 
 
 if __name__ == "__main__":
