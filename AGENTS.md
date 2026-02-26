@@ -85,6 +85,7 @@ pytest tests/ -v
 |------|---------|---------|
 | `--root` | `results` | Root containing run subdirectories |
 | `--run` | latest run | Run folder under `--root` to plot |
+| `--all-runs` | False | Generate figures for **every** run folder under `--root` that contains `search_n*.jsonl` |
 
 ## Architecture & core concepts
 
@@ -174,7 +175,9 @@ sqrt-depth.
 
 `scripts/plot_results.py` — chooses a run directory (explicit `--run` or the
 most recent subdirectory under `--root` with `search_n*.jsonl`) and generates
-three matplotlib figures in `<run>/figures/`:
+three matplotlib figures in `<run>/figures/`. With `--all-runs` it iterates
+over **all** such run directories under `--root` and regenerates figures for
+each:
 
 - `error_vs_depth.png` — semilogy best error vs sqrt depth, one subplot per n.
 - `error_vs_nodes.png` — scatter of error vs node count.

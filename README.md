@@ -171,6 +171,7 @@ results/n7-11-13_d3_nodes15_beam2000_20260226-224721/figures/
 |------|---------|-------------|
 | `--root` | `results` | Root containing run subdirectories |
 | `--run` | *latest run* | Which run folder under `--root` to plot |
+| `--all-runs` | `False` | If set, generate figures for **every** run folder under `--root` that contains `search_n*.jsonl` |
 
 ---
 

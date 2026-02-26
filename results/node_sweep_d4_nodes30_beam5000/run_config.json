@@ -1,0 +1,21 @@
+{
+  "args": {
+    "beam_width": 5000,
+    "const_set": "0,1,-1,1/2,2,3/2,3,1/4,1/3",
+    "dps": 80,
+    "max_depth": 4,
+    "max_nodes": 30,
+    "mode": "beam",
+    "n": [
+      7,
+      11,
+      13
+    ],
+    "seed": 42,
+    "top_k": 10
+  },
+  "created_at": "2026-02-26T23:27:16",
+  "output_root": "results",
+  "results_dir": "results/node_sweep_d4_nodes30_beam5000",
+  "run_name": "node_sweep_d4_nodes30_beam5000"
+}
