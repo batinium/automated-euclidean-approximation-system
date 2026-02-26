@@ -67,6 +67,7 @@ def main() -> None:
 
     # ── determine run directory ──
     from datetime import datetime
+    import json as _json
 
     output_root = Path(args.output_root)
     output_root.mkdir(parents=True, exist_ok=True)
@@ -83,6 +84,27 @@ def main() -> None:
 
     results_dir = output_root / run_name
     results_dir.mkdir(parents=True, exist_ok=True)
+
+    # Persist run configuration so experiments are easily reproducible.
+    meta = {
+        "run_name": run_name,
+        "output_root": str(output_root),
+        "results_dir": str(results_dir),
+        "created_at": datetime.now().isoformat(timespec="seconds"),
+        "args": {
+            "n": list(args.n),
+            "max_depth": args.max_depth,
+            "max_nodes": args.max_nodes,
+            "beam_width": args.beam_width,
+            "dps": args.dps,
+            "seed": args.seed,
+            "mode": args.mode,
+            "const_set": args.const_set,
+            "top_k": args.top_k,
+        },
+    }
+    with (results_dir / "run_config.json").open("w") as fh:
+        _json.dump(meta, fh, indent=2, sort_keys=True)
 
     console.print(
         f"[bold magenta]Run directory:[/bold magenta] {results_dir}",
