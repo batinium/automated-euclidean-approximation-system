@@ -174,6 +174,71 @@ results/n7-11-13_d3_nodes15_beam2000_20260226-224721/figures/
 
 ---
 
+## Example experiment commands
+
+These are ready-to-edit templates for running and comparing different searches.
+
+### Single reference run
+
+```bash
+python scripts/run_search.py \
+  --n 7 11 13 \
+  --max_depth 4 \
+  --max_nodes 25 \
+  --beam_width 2000 \
+  --seed 1 \
+  --run_name n7-11-13_d4_nodes25_beam2000_seed1
+
+python scripts/plot_results.py --run n7-11-13_d4_nodes25_beam2000_seed1
+```
+
+### Sweep over seeds (same parameters)
+
+```bash
+for s in 1 2 3 4 5; do
+  python scripts/run_search.py \
+    --n 7 11 13 \
+    --max_depth 4 \
+    --max_nodes 25 \
+    --beam_width 2000 \
+    --seed "$s" \
+    --run_name n7-11-13_d4_nodes25_beam2000_seed"$s"
+done
+```
+
+### Sweep over depth and node budget
+
+```bash
+for d in 2 3 4; do
+  for nodes in 15 20 25; do
+    python scripts/run_search.py \
+      --n 7 11 13 \
+      --max_depth "$d" \
+      --max_nodes "$nodes" \
+      --beam_width 2000 \
+      --seed 1 \
+      --run_name n7-11-13_d${d}_nodes${nodes}_beam2000_seed1
+  done
+done
+```
+
+### Parallel runs (e.g. seeds in parallel)
+
+```bash
+for s in 1 2 3; do
+  python scripts/run_search.py \
+    --n 7 11 13 \
+    --max_depth 4 \
+    --max_nodes 25 \
+    --beam_width 2000 \
+    --seed "$s" \
+    --run_name n7-11-13_d4_nodes25_beam2000_seed"$s" &
+done
+wait
+```
+
+---
+
 ## Design choices & limitations
 
 - **Constructibility only** — the system produces values in the *constructible
