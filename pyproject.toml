@@ -1,0 +1,25 @@
+[project]
+name = "aeas"
+version = "0.1.0"
+description = "Automated Euclidean Approximation System"
+requires-python = ">=3.11"
+dependencies = [
+    "mpmath",
+    "numpy",
+    "matplotlib",
+    "pandas",
+    "rich",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "sympy"]
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

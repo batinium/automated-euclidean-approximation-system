@@ -1,0 +1,13 @@
+name: aeas
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.11,<3.13
+  - mpmath
+  - numpy
+  - matplotlib-base
+  - pandas
+  - pytest
+  - rich
+  - sympy
+  - pip
