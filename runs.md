@@ -27,6 +27,9 @@ python3 scripts/plot_results.py --root results --all-runs
 python3 scripts/plot_results.py --root results --multi-run-grid
 python3 scripts/analyse_scaling.py
 
+5 -- Generate algorithm visualisations (optional, for paper figures)
+python3 scripts/visualize_search.py --root results --mode all --n 7 --depth 3 --rank 1 --m 2 --max-height 32
+
 That's 14 search runs total. Rough time estimates:
 Beam baseline: ~30s
 Field h=20 baseline: ~80s

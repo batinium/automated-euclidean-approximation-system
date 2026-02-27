@@ -345,10 +345,14 @@ All generated under `results/analysis/`:
 - `field_vs_beam_table.csv` -- field vs beam comparison at each (n, depth)
 - `saturation_h32_vs_h64.png` -- depth saturation comparison for n=7 at h=32 vs h=64
 - `saturation_table.csv` -- raw saturation data
+- `search_architecture.png` -- high-level field-first search pipeline diagram
+- `expr_tree_n7_d3_r1.png` -- expression tree for the best depth-3 candidate (n=7)
+- `depth1_heatmap_n7_m2_h32.png` -- depth-1 A + B√m search landscape (n=7, m=2, H=32)
+- `tower_layers_n7.png` -- tower layers overview: best error vs depth for n=7
 
 Multi-run grid: `results/multi_run_error_vs_depth.png`, `results/multi_run_summary.csv`.
 Per-run figures: in each `results/<run>/figures/`.
-Analysis script: `scripts/analyse_scaling.py`.
+Analysis scripts: `scripts/analyse_scaling.py`, `scripts/visualize_search.py`.
 
 ---
 
