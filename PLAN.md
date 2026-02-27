@@ -85,7 +85,7 @@ Deliverable: a table per n comparing field vs beam errors and runtimes at each d
 
 **Goal**: Empirically characterise how error scales with coefficient height at fixed depth \(d\), and identify diminishing returns.
 
-- **Targets**: focus on \(n=7\) and \(n=13\) (optionally include 11).
+- **Targets**: \(n = 7, 11, 13\).
 - **Depths**: \(d = 1, 2\) (and possibly 3 if runtime acceptable).
 - **Heights**: `max_height ∈ {8, 12, 16, 24, 32, 48}`.
 - **Other params**: `max_radicand = 30`, `beam_width = 2000`, `max_depth` at least as large as the depth being studied, `mode=field`.
@@ -96,13 +96,13 @@ Example command template (adjust `--max_height` and `--max_depth` per sweep):
 for H in 8 12 16 24 32 48; do
   python3 scripts/run_search.py \
     --mode field \
-    --n 7 13 \
+    --n 7 11 13 \
     --max_depth 2 \
     --max_height "$H" \
     --max_radicand 30 \
     --beam_width 2000 \
     --dps 80 \
-    --run_name "field_n7-13_d2_h${H}_r30_bw2000"
+    --run_name "field_n7-11-13_d2_h${H}_r30_bw2000"
 done
 ```
 
@@ -126,7 +126,7 @@ Stopping rule (per depth):
 Command template (repeat with increasing `--max_depth` or separate `run_name`s):
 
 ```bash
-for D in 0 1 2 3; do
+for D in 0 1 2 3 4; do
   python3 scripts/run_search.py \
     --mode field \
     --n 7 11 13 \
@@ -238,8 +238,8 @@ Both runs completed and archived in `results/`:
 
 | Run directory | Mode | Params |
 |---------------|------|--------|
-| `n7-11-13_d3_nodes15_beam2000_20260227-133223` | field | d3, h20, r30, bw2000 |
-| `n7-11-13_d3_nodes15_beam2000_20260227-134057` | beam  | d3, nodes15, bw2000 |
+| `field_n7-11-13_d3_h20_r30_bw2000` | field | d3, h20, r30, bw2000 |
+| `beam_n7-11-13_d3_nodes15_bw2000`  | beam  | d3, nodes15, bw2000 |
 
 Per-run figures generated for both. Multi-run grid and summary CSV regenerated.
 
@@ -251,23 +251,23 @@ OOM bug fixed: replaced unbounded `d1_raw` list with bounded `heapq` in `field_s
 
 | Run name | Height | Status |
 |----------|--------|--------|
-| `field_n7-13_d2_h8_r30_bw2000`  | 8  | done |
-| `field_n7-13_d2_h12_r30_bw2000` | 12 | done |
-| `field_n7-13_d2_h16_r30_bw2000` | 16 | done |
-| `field_n7-13_d2_h24_r30_bw2000` | 24 | done |
-| `field_n7-13_d2_h32_r30_bw2000` | 32 | done |
-| `field_n7-13_d2_h48_r30_bw2000` | 48 | done (after OOM fix) |
+| `field_n7-11-13_d2_h8_r30_bw2000`  | 8  | done |
+| `field_n7-11-13_d2_h12_r30_bw2000` | 12 | done |
+| `field_n7-11-13_d2_h16_r30_bw2000` | 16 | done |
+| `field_n7-11-13_d2_h24_r30_bw2000` | 24 | done |
+| `field_n7-11-13_d2_h32_r30_bw2000` | 32 | done |
+| `field_n7-11-13_d2_h48_r30_bw2000` | 48 | done (after OOM fix) |
 
 **Observed best errors at depth 1 (height scaling)**:
 
-| max_height | n=7       | n=13      |
-|------------|-----------|-----------|
-| 8          | 3.96e-05  | 2.19e-05  |
-| 12         | 4.78e-06  | 2.76e-07  |
-| 16         | 2.21e-06  | 2.76e-07  |
-| 24         | 4.67e-07  | 1.52e-07  |
-| 32         | 3.86e-08  | 5.11e-08  |
-| 48         | 3.86e-08  | 1.17e-08  |
+| max_height | n=7       | n=11      | n=13      |
+|------------|-----------|-----------|-----------|
+| 8          | 3.96e-05  | 1.21e-05  | 2.19e-05  |
+| 12         | 4.78e-06  | 1.21e-05  | 2.76e-07  |
+| 16         | 2.21e-06  | 4.78e-06  | 2.76e-07  |
+| 24         | 4.67e-07  | 1.02e-08  | 1.52e-07  |
+| 32         | 3.86e-08  | 1.02e-08  | 5.11e-08  |
+| 48         | 3.86e-08  | 1.02e-08  | 1.17e-08  |
 
 Log-log fits: see `results/analysis/height_scaling_loglog.png`.
 
@@ -299,22 +299,32 @@ See `results/analysis/depth_scaling_h32.png`.
 
 | Run name | max_depth | max_height | Status |
 |----------|-----------|------------|--------|
-| `field_n7_d4_h64_r30_bw2000` | 4 | 64 | done |
+| `field_n7-11-13_d4_h64_r30_bw2000` | 4 | 64 | done |
 
-**Saturation comparison for n=7**:
+**Saturation comparison (h=32 vs h=64)**:
 
-| depth | h=32      | h=64      |
-|-------|-----------|-----------|
-| 0     | 8.68e-07  | 5.75e-08  |
-| 1     | 3.86e-08  | 3.80e-08  |
-| 2     | 1.25e-08  | 4.36e-10  |
-| 3     | 2.51e-10  | 4.36e-10  |
-| 4     | 2.51e-10  | 4.36e-10  |
+| n  | depth | h=32      | h=64      | ratio (32/64) |
+|----|-------|-----------|-----------|---------------|
+| 7  | 0     | 8.68e-07  | 5.75e-08  | 15.1x         |
+| 7  | 1     | 3.86e-08  | 3.80e-08  | 1.0x          |
+| 7  | 2     | 1.25e-08  | 4.36e-10  | 28.7x         |
+| 7  | 3     | 2.51e-10  | 4.36e-10  | 0.6x          |
+| 7  | 4     | 2.51e-10  | 4.36e-10  | 0.6x          |
+| 11 | 0     | 2.59e-07  | 8.51e-10  | 304.3x        |
+| 11 | 1     | 1.02e-08  | 8.51e-10  | 12.0x         |
+| 11 | 2     | 1.02e-08  | 8.51e-10  | 12.0x         |
+| 11 | 3     | 5.10e-10  | 8.51e-10  | 0.6x          |
+| 11 | 4     | 5.10e-10  | 8.51e-10  | 0.6x          |
+| 13 | 0     | 8.60e-07  | 1.10e-07  | 7.8x          |
+| 13 | 1     | 5.11e-08  | 1.17e-08  | 4.4x          |
+| 13 | 2     | 1.70e-08  | 1.07e-08  | 1.6x          |
+| 13 | 3     | 5.64e-09  | 1.07e-08  | 0.5x          |
+| 13 | 4     | 5.64e-09  | 5.92e-09  | 1.0x          |
 
 **Key findings**:
 
-1. **Height dramatically improves accuracy**: h=64 depth 0 is 15x better than h=32 depth 0; h=64 depth 2 is 29x better than h=32 depth 2. This proves height drives error reduction.
-2. **Saturation depth shifts with height**: at h=32 saturation occurs at depth 3 (d3=d4); at h=64 saturation occurs earlier at depth 2 (d2=d3=d4), because finer coefficients at depth 2 already reach a strong result (4.36e-10).
+1. **Height dramatically improves accuracy**: for n=7, h=64 depth 0 is 15x better than h=32 depth 0; h=64 depth 2 is 29x better than h=32 depth 2. For n=11, h=64 depth 0 is 304x better. This proves height drives error reduction.
+2. **Saturation depth shifts with height**: at h=32 saturation occurs at depth 3 (d3=d4); at h=64 saturation occurs earlier at depth 2 (d2=d3=d4) for n=7, because finer coefficients at depth 2 already reach a strong result (4.36e-10).
 3. **Saturation is universal**: at any fixed height H, there exists a depth beyond which further nesting cannot improve. This is the **coefficient resolution floor** -- the granularity of outermost P,Q coefficients (approximately 1/H) dominates the achievable error.
 4. **The algorithm IS exploring**: at h=64, depth-4 expressions are generated (21 nodes each) but they're 200x worse than the best depth-2 result. The search space is fully explored; the limitation is structural.
 
@@ -403,9 +413,9 @@ The strongest defense is a control experiment: re-run depth 4 with higher height
 
 Recommended experiment to add:
 
-python3 scripts/run_search.py --mode field --n 7 --max_depth 4 \
+python3 scripts/run_search.py --mode field --n 7 11 13 --max_depth 4 \
   --max_height 64 --max_radicand 30 --beam_width 2000 --dps 80 \
-  --run_name "field_n7_d4_h64_r30_bw2000" --progress
+  --run_name "field_n7-11-13_d4_h64_r30_bw2000" --progress
 
 If this gets below 2.5e-10 for n=7 at depth 4, the argument is proven: stagnation was a height limit, not an algorithm limit.
 

@@ -6,10 +6,10 @@ python3 scripts/run_search.py --mode beam --n 7 11 13 --max_depth 3 --max_nodes 
 
 python3 scripts/run_search.py --mode field --n 7 11 13 --max_depth 3 --max_height 20 --max_radicand 30 --beam_width 2000 --dps 80 --run_name "field_n7-11-13_d3_h20_r30_bw2000"
 
-3.2 -- Height scaling sweep (RQ1), n=7,13 at depth 2
+3.2 -- Height scaling sweep (RQ1), n=7,11, 13 at depth 2
 
 for H in 8 12 16 24 32 48; do  
-    python3 scripts/run_search.py --mode field --n 7 13 --max_depth 2 --max_height "$H" --max_radicand 30 --beam_width 2000 --dps 80 --run_name "field_n7-13_d2_h${H}_r30_bw2000"
+    python3 scripts/run_search.py --mode field --n 7 11 13 --max_depth 2 --max_height "$H" --max_radicand 30 --beam_width 2000 --dps 80 --run_name "field_n7-11-13_d2_h${H}_r30_bw2000"
 done
 
 
@@ -23,7 +23,9 @@ done
 python3 scripts/run_search.py --mode field --n 7 11 13 --max_depth 4 --max_height 64 --max_radicand 30 --beam_width 2000 --dps 80 --run_name "field_n7-11-13_d4_h64_r30_bw2000"
 
 4 -- Regenerate all analysis
-python3 scripts/plot_results.py --root results --all-runspython3 scripts/analyse_scaling.py
+python3 scripts/plot_results.py --root results --all-runs
+python3 scripts/plot_results.py --root results --multi-run-grid
+python3 scripts/analyse_scaling.py
 
 That's 14 search runs total. Rough time estimates:
 Beam baseline: ~30s

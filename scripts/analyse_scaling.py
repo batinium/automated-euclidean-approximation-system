@@ -56,7 +56,7 @@ def _load_height_scaling_data(results_root: Path) -> pd.DataFrame:
     for run_dir in sorted(results_root.iterdir()):
         if not run_dir.is_dir():
             continue
-        if not run_dir.name.startswith("field_n7-13_d2_h"):
+        if not re.match(r"field_n[\d-]+_d2_h\d+", run_dir.name):
             continue
         height = _extract_height_from_run(run_dir)
         if height is None:
