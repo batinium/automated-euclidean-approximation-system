@@ -97,27 +97,27 @@ def _draw_arrow(
 
 def plot_architecture(out_path: Path) -> None:
     """High-level field-first search architecture diagram."""
-    fig, ax = plt.subplots(figsize=(7, 4))
-    ax.set_xlim(0, 10)
+    fig, ax = plt.subplots(figsize=(7.5, 3.8))
+    ax.set_xlim(0, 12)
     ax.set_ylim(0, 6)
     ax.axis("off")
 
     # Row 1: target + depth-0 rationals
-    _draw_box(ax, (1.5, 4.5), 2.0, 1.0, "Target\ncos(2π/n)", facecolor="#fff5e6")
+    _draw_box(ax, (1.5, 4.5), 2.0, 0.9, "Target\ncos(2π/n)", facecolor="#fff5e6")
     _draw_box(
         ax,
-        (4.5, 4.5),
+        (5.5, 4.5),
         3.0,
-        1.0,
+        0.9,
         "Depth 0:\nRationals A (height ≤ H)",
     )
 
     # Row 2: depth-1 guided search
     _draw_box(
         ax,
-        (8.0, 4.5),
+        (9.5, 4.5),
         3.2,
-        1.0,
+        0.9,
         "Depth 1:\nA + B·√m, squarefree m ≤ M\nguided coefficient search",
     )
 
@@ -125,8 +125,8 @@ def plot_architecture(out_path: Path) -> None:
     _draw_box(
         ax,
         (3.0, 2.5),
-        4.2,
-        1.0,
+        4.0,
+        0.9,
         "Float pre-filter over millions of\n(A, B, m) / (P, Q, inner) tuples",
         facecolor="#e6f7ff",
     )
@@ -134,9 +134,9 @@ def plot_architecture(out_path: Path) -> None:
     # Row 4: tree materialisation + pruning
     _draw_box(
         ax,
-        (8.0, 2.5),
+        (9.5, 2.5),
         3.6,
-        1.0,
+        0.9,
         "Tree materialisation + mpmath\n+ diversity-preserving pruning",
         facecolor="#e6ffe6",
     )
@@ -144,20 +144,20 @@ def plot_architecture(out_path: Path) -> None:
     # Row 5: deeper tower levels
     _draw_box(
         ax,
-        (5.5, 0.8),
-        5.5,
-        1.2,
+        (6.5, 0.8),
+        5.0,
+        1.1,
         "Depth ≥2 towers:\nP + Q·√(inner depth d−1),\nbiquadratic corrections C·√n",
     )
 
     # Arrows
-    _draw_arrow(ax, (2.5, 4.5), (3.0, 4.5), None)
-    _draw_arrow(ax, (6.0, 4.5), (6.8, 4.5), None)
-    _draw_arrow(ax, (8.0, 3.9), (8.0, 3.1), "best float\ncandidates")
+    _draw_arrow(ax, (2.5, 4.5), (3.5, 4.5), None)
+    _draw_arrow(ax, (7.0, 4.5), (8.2, 4.5), None)
+    _draw_arrow(ax, (9.5, 3.9), (9.5, 3.1), "best float\ncandidates")
     _draw_arrow(ax, (3.0, 3.9), (3.0, 3.1), "target\nprojection")
-    _draw_arrow(ax, (4.5, 3.9), (3.6, 3.1), None)
-    _draw_arrow(ax, (8.0, 1.9), (5.8, 1.4), "survivors\nper depth")
-    _draw_arrow(ax, (5.2, 1.4), (7.6, 1.9), "inner values\nfor next depth")
+    _draw_arrow(ax, (5.0, 3.9), (3.8, 3.1), None)
+    _draw_arrow(ax, (9.5, 1.9), (7.2, 1.4), "survivors\nper depth")
+    _draw_arrow(ax, (5.8, 1.4), (9.0, 1.9), "inner values\nfor next depth")
 
     fig.tight_layout()
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -294,8 +294,18 @@ def plot_expression_tree(
     # draw nodes
     for node, x, d in placements:
         y = -d
+        # circle
         ax.scatter([x], [y], s=80, color="#ffffff", edgecolor="#333333", zorder=3)
-        ax.text(x, y, node.label, fontsize=9, ha="center", va="center", zorder=4)
+        # label slightly below the circle to improve readability
+        ax.text(
+            x,
+            y - 0.22,
+            node.label,
+            fontsize=8,
+            ha="center",
+            va="top",
+            zorder=4,
+        )
 
     ax.set_title(f"Expression tree for n={n}, depth={depth_level}, rank={rank}")
     ax.set_ylim(-max_depth - 1, 1)
