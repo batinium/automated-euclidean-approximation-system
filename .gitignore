@@ -33,3 +33,16 @@ results/*.jsonl
 results/*.csv
 !results/.gitkeep
 !results/figures/.gitkeep
+
+# LaTeX build artifacts (report/)
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+report/*.pdf

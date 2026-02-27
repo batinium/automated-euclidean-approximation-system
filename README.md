@@ -1,256 +1,56 @@
 # Automated Euclidean Approximation System (AEAS)
 
-A Python prototype that searches quadratic-radical expression trees to
-approximate `cos(2π/n)` for values of *n* whose associated regular polygon
-is **not** ruler-and-compass constructible (e.g. *n = 7, 11, 13*).
+AEAS searches constructible-number approximations to `cos(2π/n)` for non-constructible polygon sizes (notably `n=7,11,13`).
 
-The system generates **constructible-number candidates** — values built from
-`0` and `1` using `+, −, ×, ÷, √` — under bounded sqrt-depth and node
-count, evaluates them with arbitrary precision (via `mpmath`), and reports
-the best approximations.
+## Canonical docs
 
----
+- Agent/project instructions: `AGENTS.md`
+- Reproducible runbook: `runs.md`
+- Paper planning + handoff: `report/PLAN.md`
+- Manuscript draft: `report/aeas_paper.tex`
 
 ## Quick start
 
 ```bash
-# 1. Create and activate the environment
 micromamba create -f aeas-env.yml
 micromamba activate aeas
-
-# 2. Install the package in editable mode
 pip install -e .
 
-# 3. Run the search (beam search, n=7,11,13, depth up to 3)
-python scripts/run_search.py --n 7 11 13 --max_depth 3 --max_nodes 15 --beam_width 2000
-
-# Each invocation now creates a dedicated run directory under results/,
-# e.g. results/n7-11-13_d3_nodes15_beam2000_YYYYMMDD-HHMMSS/
-
-# 4. Generate plots for the latest run (or pass --run <name> explicitly)
-python scripts/plot_results.py
-python scripts/plot_results.py --run n7-11-13_d3_nodes15_beam2000_YYYYMMDD-HHMMSS
-
-# 5. Run the test suite
-pytest tests/ -v
+# one-command sequential rerun (core + visuals)
+bash scripts/rerun_all.sh --purge-results
 ```
 
----
-
-## Project layout
-
-```
-├── aeas-env.yml              Micromamba environment spec
-├── pyproject.toml             Package metadata & build config
-├── src/aeas/
-│   ├── expr.py                Immutable expression-tree nodes (ExprNode, Op)
-│   ├── canonicalize.py        Canonicalization, constant folding, identities
-│   ├── evaluate.py            Arbitrary-precision evaluation (mpmath)
-│   └── search.py              Beam search & baseline enumeration
-├── scripts/
-│   ├── run_search.py          CLI entry point
-│   └── plot_results.py        Matplotlib visualisations
-├── tests/                     pytest suite
-├── data/                      (placeholder for input data)
-└── results/                   JSONL, CSV, and figures saved here
-```
-
----
-
-## How it works
-
-### Expression representation
-
-Every candidate is an **immutable tree** (`ExprNode`) whose nodes are one of:
-
-| Op | Arity | Description |
-|----|-------|-------------|
-| `CONST` | 0 | Rational constant (stored as `fractions.Fraction`) |
-| `ADD` | 2 | Addition |
-| `SUB` | 2 | Subtraction |
-| `MUL` | 2 | Multiplication |
-| `DIV` | 2 | Division |
-| `SQRT` | 1 | Square root |
-
-Two key metrics are tracked on each node:
-
-- **sqrt_depth** — maximum nesting level of `SQRT` operations (0 for pure
-  rationals).
-- **node_count** — total number of nodes in the tree.
-
-Hashing is structural and memoised, making deduplication via `set` O(1)
-amortised.
-
-### Canonicalization
-
-Before an expression enters the search pool it is **canonicalized**:
-
-1. **Recursive descent** — children are canonicalized first.
-2. **Constant folding** — if all children are rational constants the expression
-   is evaluated exactly with `fractions.Fraction` (division by zero and
-   irrational sqrt are left symbolic).
-3. **Identity elimination** — `x + 0 → x`, `x * 1 → x`, `x * 0 → 0`,
-   `x / 1 → x`, `x − 0 → x`.
-4. **Commutative sorting** — children of `ADD` and `MUL` are sorted by their
-   canonical string representation so that `a + b` and `b + a` collapse to the
-   same canonical form.
-
-### Search strategies
-
-**Baseline enumeration** (`--mode baseline`) — exhaustive generation of all
-valid expressions up to the node/depth budget. Very slow; useful only for
-tiny limits.
-
-**Beam search** (`--mode beam`, default) — iterative deepening by sqrt-depth:
-
-1. Seed the pool with rational constants.
-2. At each depth level *d*:
-   - If *d > 0*, inject `sqrt(e)` for every pool member *e*.
-   - Run several expansion rounds: combine pool members with seed constants
-     and with the top-ranked pool members via all binary ops.
-   - Prune to `beam_width`, ranked by `(|error|, node_count, canonical_string)`.
-3. Record top results per depth level.
-
-**Heuristic filters during beam search:**
-
-- Reject expressions that evaluate to `NaN`, `±∞`, or `|value| > 100`.
-- Use a deterministic sort key for pruning to guarantee reproducibility.
-- Cache evaluations to avoid redundant mpmath work.
-
-### Evaluation
-
-All numeric evaluation uses `mpmath` at a configurable precision (`--dps`,
-default 80 decimal places) with 15 extra guard digits internally. Results are
-cached by `(expression_hash, dps)` for efficiency.
-
-### Output
-
-Each invocation of `scripts/run_search.py` writes into its own **run directory**
-under `results/`, for example:
-
-```text
-results/n7-11-13_d3_nodes15_beam2000_20260226-224721/
-  ├── run_config.json      # All CLI args, run_name, timestamp
-  ├── search_n7.jsonl      # Per-depth top-K results for n=7
-  ├── search_n11.jsonl
-  ├── search_n13.jsonl
-  └── summary.csv          # One-row-per-(n, depth) best results
-```
-
-When you run `scripts/plot_results.py` for a given run, it writes figures into
-`<run>/figures/`:
-
-```text
-results/n7-11-13_d3_nodes15_beam2000_20260226-224721/figures/
-  ├── error_vs_depth.png
-  ├── error_vs_nodes.png
-  └── combined_errors.png
-```
-
----
-
-## Configuration reference
-
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--n` | `7 11 13` | Target polygon side counts |
-| `--max_depth` | `3` | Max sqrt nesting |
-| `--max_nodes` | `15` | Max tree nodes |
-| `--beam_width` | `2000` | Beam width |
-| `--dps` | `80` | mpmath decimal places |
-| `--seed` | `42` | Seed (metadata — search is deterministic) |
-| `--mode` | `beam` | `beam` or `baseline` |
-| `--const_set` | `0,1,-1,1/2,2,3/2,3,1/4,1/3` | Seed rationals |
-| `--top_k` | `10` | Results printed per depth |
-| `--output_root` | `results` | Parent directory for all runs |
-| `--run_name` | *auto* | Optional explicit run subdirectory name |
-
-`scripts/plot_results.py` has its own small CLI:
-
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--root` | `results` | Root containing run subdirectories |
-| `--run` | *latest run* | Which run folder under `--root` to plot |
-| `--all-runs` | `False` | If set, generate figures for **every** run folder under `--root` that contains `search_n*.jsonl` |
-
----
-
-## Example experiment commands
-
-These are ready-to-edit templates for running and comparing different searches.
-
-### Single reference run
+Optional experiment extensions:
 
 ```bash
-python scripts/run_search.py \
-  --n 7 11 13 \
-  --max_depth 4 \
-  --max_nodes 25 \
-  --beam_width 2000 \
-  --seed 1 \
-  --run_name n7-11-13_d4_nodes25_beam2000_seed1
+# stronger robustness runs
+bash scripts/rerun_all.sh --purge-results --extra-experiments
 
-python scripts/plot_results.py --run n7-11-13_d4_nodes25_beam2000_seed1
+# parameter-justification sweeps
+bash scripts/rerun_all.sh --purge-results --justification-experiments
 ```
 
-### Sweep over seeds (same parameters)
+## Core scripts
 
-```bash
-for s in 1 2 3 4 5; do
-  python scripts/run_search.py \
-    --n 7 11 13 \
-    --max_depth 4 \
-    --max_nodes 25 \
-    --beam_width 2000 \
-    --seed "$s" \
-    --run_name n7-11-13_d4_nodes25_beam2000_seed"$s"
-done
-```
+- `scripts/run_search.py`: run one search configuration
+- `scripts/plot_results.py`: generate per-run and multi-run plots
+- `scripts/analyse_scaling.py`: generate paper analysis tables/figures
+- `scripts/visualize_search.py`: architecture/tree/heatmap visuals
+- `scripts/rerun_all.sh`: sequential end-to-end automation
 
-### Sweep over depth and node budget
+## Key outputs
 
-```bash
-for d in 2 3 4; do
-  for nodes in 15 20 25; do
-    python scripts/run_search.py \
-      --n 7 11 13 \
-      --max_depth "$d" \
-      --max_nodes "$nodes" \
-      --beam_width 2000 \
-      --seed 1 \
-      --run_name n7-11-13_d${d}_nodes${nodes}_beam2000_seed1
-  done
-done
-```
+- Per-run artifacts: `results/<run_name>/`
+- Aggregated grid summary: `results/multi_run_summary.csv`
+- Paper-ready analysis artifacts: `results/analysis/`
+  - `field_vs_beam_baseline_table.csv`
+  - `field_vs_beam_bestof_table.csv`
+  - `height_scaling_table.csv`
+  - `depth_scaling_table.csv`
+  - `saturation_table.csv`
 
-### Parallel runs (e.g. seeds in parallel)
+## Notes
 
-```bash
-for s in 1 2 3; do
-  python scripts/run_search.py \
-    --n 7 11 13 \
-    --max_depth 4 \
-    --max_nodes 25 \
-    --beam_width 2000 \
-    --seed "$s" \
-    --run_name n7-11-13_d4_nodes25_beam2000_seed"$s" &
-done
-wait
-```
-
----
-
-## Design choices & limitations
-
-- **Constructibility only** — the system produces values in the *constructible
-  reals* (iterated square roots over ℚ). For *n = 7, 11, 13* the exact cosine
-  is **not** constructible, so we report *approximations*.
-- **Greedy pruning** — beam search may discard useful intermediates that would
-  combine into better expressions at higher depth. Increasing `--beam_width`
-  mitigates this at the cost of runtime.
-- **No algebraic simplification** — we do not simplify `sqrt(sqrt(x))` to
-  `x^(1/4)` or apply distributive laws. Structure is preserved as-is.
-- **Hash collisions** — theoretically possible but negligible in practice with
-  Python's 64-bit hash.
-- **Determinism** — given the same parameters, the search always produces the
-  same results (no randomness in expansion or pruning).
+- Main RQ2 claim should use `field_vs_beam_baseline_table.csv`.
+- `field_vs_beam_bestof_table.csv` is robustness context, not baseline claim.
+- Run tests with `pytest tests/ -v`.
