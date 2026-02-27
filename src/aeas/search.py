@@ -27,6 +27,10 @@ DEFAULT_CONST_SET: list[Fraction] = [
     Fraction(3),
     Fraction(1, 4),
     Fraction(1, 3),
+    Fraction(2, 3),
+    Fraction(3, 4),
+    Fraction(4, 3),
+    Fraction(5, 4),
 ]
 
 
@@ -121,6 +125,7 @@ def beam_search(
     const_set: list[Fraction] | None = None,
     dps: int = 80,
     seed: int = 42,
+    progress: bool = False,
 ) -> dict[int, list[tuple[float, ExprNode]]]:
     """Beam search with heuristic pruning and diversity across sqrt depths.
 
@@ -160,26 +165,39 @@ def beam_search(
         return expr
 
     def prune_diverse() -> None:
-        """Prune pool with reserved slots per sqrt-depth level."""
+        """Prune pool with reserved slots per sqrt-depth level.
+
+        Compared to the original version, this uses a per-depth reservation
+        that does not shrink as more sqrt-depth levels become populated.
+        Each level gets at least ``beam_width // (max_depth + 1)`` slots
+        (capped by the actual population), up to the overall beam_width.
+        """
         pool.sort(key=_sort_key)
         by_sd: dict[int, list[tuple[float, ExprNode]]] = {}
         for entry in pool:
             d = entry[1].sqrt_depth
             by_sd.setdefault(d, []).append(entry)
 
-        n_levels = max(len(by_sd), 1)
-        reserved = max(beam_width // (3 * n_levels), 50)
-
         kept: list[tuple[float, ExprNode]] = []
         kept_ids: set[int] = set()
 
+        # Per-depth reservation approximates a partitioned beam: each
+        # sqrt-depth level gets its own budget, instead of sharing a
+        # shrinking slice as more levels appear.
+        per_level_min = max(beam_width // max(max_depth + 1, 1), 50)
+
         for d in sorted(by_sd):
-            for entry in by_sd[d][:reserved]:
+            bucket = by_sd[d]
+            reserved = min(per_level_min, len(bucket))
+            for entry in bucket[:reserved]:
                 eid = id(entry[1])
                 if eid not in kept_ids:
                     kept.append(entry)
                     kept_ids.add(eid)
 
+        # Fill remaining capacity with globally best entries, preserving
+        # determinism while allowing good candidates from any depth to
+        # participate.
         for entry in pool:
             if len(kept) >= beam_width:
                 break
@@ -226,8 +244,11 @@ def beam_search(
             # to build compound expressions (sqrt(x)+a, sqrt(x)/b, …)
             expand(new_sqrts[:min(500, len(new_sqrts))], seeds)
 
-            # Phase 3: combine new sqrt exprs with each other
-            top_sq = new_sqrts[:min(80, len(new_sqrts))]
+            # Phase 3: combine new sqrt exprs with each other. The cap
+            # scales with depth so that higher sqrt-depth levels can
+            # explore more radical compositions.
+            sqrt_sqrt_cap = min(80 * (1 + depth), len(new_sqrts), beam_width)
+            top_sq = new_sqrts[:sqrt_sqrt_cap]
             expand(top_sq, top_sq)
 
             # Phase 4: combine compound sqrt-expressions with seeds
@@ -239,20 +260,32 @@ def beam_search(
             ][:min(200, beam_width)]
             expand(depth_exprs, seeds)
 
+            # Phase 4b: allow compound-at-depth expressions to combine
+            # with each other, e.g. (sqrt(a)+b)*(sqrt(c)+d).
+            top_compound = depth_exprs[: min(100, len(depth_exprs))]
+            expand(top_compound, top_compound)
+
         # ---- general expansion rounds ----
-        n_rounds = 3 if depth == 0 else 2
+        if depth == 0:
+            n_rounds = 3
+        else:
+            # Deeper levels get more composition rounds; this helps
+            # deep expressions catch up with strong shallow rationals.
+            n_rounds = max(3, 2 + depth // 2)
         for _ in range(n_rounds):
             pool.sort(key=_sort_key)
             pool_exprs = [e for _, e in pool[:beam_width]]
-            top_n = min(100, len(pool_exprs))
+            base_top_n = 100 + 50 * depth
+            top_n = min(base_top_n, len(pool_exprs), beam_width)
 
             expand(pool_exprs, seeds)
 
             # Ensure sqrt-containing expressions participate in cross-products
             if depth > 0:
+                sqrt_cap = min(80 * (1 + depth), beam_width)
                 sqrt_pool = [
                     e for _, e in pool if e.sqrt_depth > 0
-                ][:min(80, beam_width)]
+                ][:sqrt_cap]
                 cross = pool_exprs[:top_n] + [
                     e for e in sqrt_pool if e not in set(pool_exprs[:top_n])
                 ]
@@ -264,5 +297,13 @@ def beam_search(
 
         pool.sort(key=_sort_key)
         results[depth] = list(pool)
+
+        if progress:
+            best_err = pool[0][0] if pool else float("inf")
+            print(
+                f"[beam] depth {depth}/{max_depth} "
+                f"pool={len(pool)} seen={len(seen)} best_err={best_err:.3e}",
+                flush=True,
+            )
 
     return results

@@ -13,10 +13,13 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import pandas as pd  # noqa: E402
+import math
 
 _root = Path(__file__).resolve().parent.parent
 if str(_root / "src") not in sys.path:
     sys.path.insert(0, str(_root / "src"))
+
+from aeas.evaluate import compute_target  # noqa: E402
 
 
 def _pick_results_dir(root: Path, run: str | None) -> Path:
@@ -141,6 +144,80 @@ def _plot_one_dir(results_dir: Path) -> None:
     fig.savefig(path3, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved {path3}")
+
+    # ── Plot 4: n-gon closure drift from cos(2π/n) approximations ──
+    #
+    # For each n, we compare the exact regular n-gon (using the true
+    # angle 2π/n) with polygons built from an approximate angle inferred
+    # from the best available cos(2π/n) at several depths. We do not
+    # reconstruct the exact expression value; instead we perturb the
+    # true cos by the recorded best_error, which is more than enough to
+    # visualise how angle errors would accumulate around the circle.
+    fig, axes = plt.subplots(1, ncols, figsize=(5 * ncols, 5), squeeze=False)
+    for i, n in enumerate(ns):
+        ax = axes[0][i]
+        sub = df[df["n"] == n]
+        depths = sorted(sub["depth"].unique())
+        if not depths:
+            continue
+
+        # Choose a small representative set of depths: min / mid / max.
+        rep_depths = sorted(
+            set(
+                [
+                    depths[0],
+                    depths[len(depths) // 2],
+                    depths[-1],
+                ]
+            )
+        )
+
+        # Exact reference polygon on the unit circle.
+        c_true = float(compute_target(int(n), 80))
+        theta_true = 2.0 * math.pi / int(n)
+        xs_true = [math.cos(k * theta_true) for k in range(int(n) + 1)]
+        ys_true = [math.sin(k * theta_true) for k in range(int(n) + 1)]
+        ax.plot(xs_true, ys_true, "-k", lw=2, label="exact")
+
+        colors = ["C1", "C2", "C3", "C4", "C5"]
+        for j, d in enumerate(rep_depths):
+            dsub = sub[sub["depth"] == d]
+            if dsub.empty:
+                continue
+            best_err = float(dsub["best_error"].min())
+            # Approximate cos value as true ± error. We do not know the
+            # original sign, but for small errors the magnitude dominates
+            # the geometric effect; take a consistent convention.
+            c_approx = c_true + best_err
+            c_approx = max(min(c_approx, 1.0), -1.0)
+            theta_approx = math.acos(c_approx)
+
+            xs = [math.cos(k * theta_approx) for k in range(int(n) + 1)]
+            ys = [math.sin(k * theta_approx) for k in range(int(n) + 1)]
+            ax.plot(
+                xs,
+                ys,
+                "-",
+                lw=1.4,
+                color=colors[j % len(colors)],
+                label=f"depth={d}",
+            )
+
+        ax.set_aspect("equal", "box")
+        ax.set_title(f"n={n} polygon drift")
+        ax.axis("off")
+        ax.legend(fontsize=8, loc="upper right")
+
+    fig.suptitle(
+        "Regular n-gon closure drift from cos(2π/n) approximations",
+        fontsize=13,
+        y=1.02,
+    )
+    fig.tight_layout()
+    path4 = figures_dir / "ngon_drift.png"
+    fig.savefig(path4, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved {path4}")
 
 
 def main() -> None:

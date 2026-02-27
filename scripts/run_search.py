@@ -60,6 +60,11 @@ def main() -> None:
         "If omitted, a timestamped name based on key parameters is used.",
     )
     ap.add_argument("--top_k", type=int, default=10)
+    ap.add_argument(
+        "--progress",
+        action="store_true",
+        help="Print per-depth beam_search progress (useful for long runs).",
+    )
     args = ap.parse_args()
 
     const_set = _parse_const_set(args.const_set)
@@ -129,6 +134,7 @@ def main() -> None:
                 const_set=const_set,
                 dps=args.dps,
                 seed=args.seed,
+                progress=args.progress,
             )
         else:
             res = baseline_enumerate(
