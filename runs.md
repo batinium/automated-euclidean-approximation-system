@@ -129,6 +129,11 @@ python3 scripts/analyse_scaling.py
 python3 scripts/visualize_search.py --root results --mode all --n 7 --depth 3 --rank 1 --m 2 --max-height 32
 ```
 
+`scripts/analyse_scaling.py` now emits:
+- `results/analysis/field_vs_beam_baseline_table.csv` (strict canonical baseline pair)
+- `results/analysis/field_vs_beam_bestof_table.csv` (best-by-mode across all runs)
+- `results/analysis/field_vs_beam_table.csv` (backward-compatible alias of baseline table)
+
 ## 7) Quick sanity checks
 
 ```bash

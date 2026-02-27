@@ -1,0 +1,50 @@
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 1.8983452587661986e-09, "expression": "(3148/5049)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 1}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 3.9609905972404214e-05, "expression": "(53/85)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 2}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.00011317848211012116, "expression": "(48/77)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 3}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.00016611211976114149, "expression": "(58/93)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 4}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.00030139606163204213, "expression": "(43/69)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 5}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.0005389821866023103, "expression": "(38/61)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 6}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.0008482924247712464, "expression": "(33/53)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 7}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.0012675796365112513, "expression": "(28/45)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 8}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.0015101981412665166, "expression": "(5/8)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 9}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.0015385823465383641, "expression": "(51/82)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 10}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 8.138395513057617e-10, "expression": "(((68/69) * sqrt(10)) + (-177/71))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 1}
+{"n": 7, "depth": 1, "nodes": 1, "sqrt_depth": 0, "best_error": 1.8983452587661986e-09, "expression": "(3148/5049)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 2}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 2.6297664046381897e-09, "expression": "(((8/89) * sqrt(17)) + (22/87))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 3}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 2.908798979461835e-09, "expression": "(((28/51) * sqrt(2)) + (-13/85))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 4}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 1.1274857825149809e-08, "expression": "(((-17/94) * sqrt(29)) + (123/77))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 5}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 1.1866989280129303e-08, "expression": "(((9/17) * sqrt(3)) + (-27/92))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 6}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 1.2766140700115614e-08, "expression": "(((9/67) * sqrt(14)) + (11/91))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 7}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 1.2841763541437956e-08, "expression": "(((36/53) * sqrt(5)) + (-77/86))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 8}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 1.4168715756213146e-08, "expression": "(((-79/75) * sqrt(3)) + (235/96))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 9}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 1.8582345440165682e-08, "expression": "(((4/87) * sqrt(6)) + (47/92))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 10}
+{"n": 7, "depth": 2, "nodes": 11, "sqrt_depth": 2, "best_error": 1.8924195543945643e-10, "expression": "(((-5/7) * sqrt((((-14/25) * sqrt(10)) + (170/71)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 1}
+{"n": 7, "depth": 2, "nodes": 6, "sqrt_depth": 1, "best_error": 8.138395513057617e-10, "expression": "(((68/69) * sqrt(10)) + (-177/71))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 2}
+{"n": 7, "depth": 2, "nodes": 1, "sqrt_depth": 0, "best_error": 1.8983452587661986e-09, "expression": "(3148/5049)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 3}
+{"n": 7, "depth": 2, "nodes": 6, "sqrt_depth": 1, "best_error": 2.6297664046381897e-09, "expression": "(((8/89) * sqrt(17)) + (22/87))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 4}
+{"n": 7, "depth": 2, "nodes": 6, "sqrt_depth": 1, "best_error": 2.908798979461835e-09, "expression": "(((28/51) * sqrt(2)) + (-13/85))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 5}
+{"n": 7, "depth": 2, "nodes": 11, "sqrt_depth": 2, "best_error": 3.064175690958848e-09, "expression": "(((-5/7) * sqrt((((25/37) * sqrt(7)) + (-78/67)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 6}
+{"n": 7, "depth": 2, "nodes": 11, "sqrt_depth": 2, "best_error": 3.863755759780929e-09, "expression": "(((-5/7) * sqrt((((88/79) * sqrt(3)) + (-111/85)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 7}
+{"n": 7, "depth": 2, "nodes": 11, "sqrt_depth": 2, "best_error": 4.3254746451282244e-09, "expression": "(((-5/7) * sqrt((((46/87) * sqrt(6)) + (-45/67)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 8}
+{"n": 7, "depth": 2, "nodes": 11, "sqrt_depth": 2, "best_error": 5.292666416245595e-09, "expression": "(((-5/7) * sqrt((((-1/20) * sqrt(5)) + (25/34)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 9}
+{"n": 7, "depth": 2, "nodes": 11, "sqrt_depth": 2, "best_error": 1.0571465813846714e-08, "expression": "(((-5/7) * sqrt((((-8/65) * sqrt(21)) + (19/16)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 10}
+{"n": 7, "depth": 3, "nodes": 11, "sqrt_depth": 2, "best_error": 1.8924195543945643e-10, "expression": "(((-5/7) * sqrt((((-14/25) * sqrt(10)) + (170/71)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 1}
+{"n": 7, "depth": 3, "nodes": 6, "sqrt_depth": 1, "best_error": 8.138395513057617e-10, "expression": "(((68/69) * sqrt(10)) + (-177/71))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 2}
+{"n": 7, "depth": 3, "nodes": 1, "sqrt_depth": 0, "best_error": 1.8983452587661986e-09, "expression": "(3148/5049)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 3}
+{"n": 7, "depth": 3, "nodes": 6, "sqrt_depth": 1, "best_error": 2.6297664046381897e-09, "expression": "(((8/89) * sqrt(17)) + (22/87))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 4}
+{"n": 7, "depth": 3, "nodes": 6, "sqrt_depth": 1, "best_error": 2.908798979461835e-09, "expression": "(((28/51) * sqrt(2)) + (-13/85))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 5}
+{"n": 7, "depth": 3, "nodes": 11, "sqrt_depth": 2, "best_error": 3.064175690958848e-09, "expression": "(((-5/7) * sqrt((((25/37) * sqrt(7)) + (-78/67)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 6}
+{"n": 7, "depth": 3, "nodes": 11, "sqrt_depth": 2, "best_error": 3.863755759780929e-09, "expression": "(((-5/7) * sqrt((((88/79) * sqrt(3)) + (-111/85)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 7}
+{"n": 7, "depth": 3, "nodes": 11, "sqrt_depth": 2, "best_error": 4.3254746451282244e-09, "expression": "(((-5/7) * sqrt((((46/87) * sqrt(6)) + (-45/67)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 8}
+{"n": 7, "depth": 3, "nodes": 11, "sqrt_depth": 2, "best_error": 5.292666416245595e-09, "expression": "(((-5/7) * sqrt((((-1/20) * sqrt(5)) + (25/34)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 9}
+{"n": 7, "depth": 3, "nodes": 11, "sqrt_depth": 2, "best_error": 1.0571465813846714e-08, "expression": "(((-5/7) * sqrt((((-8/65) * sqrt(21)) + (19/16)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 10}
+{"n": 7, "depth": 4, "nodes": 11, "sqrt_depth": 2, "best_error": 1.8924195543945643e-10, "expression": "(((-5/7) * sqrt((((-14/25) * sqrt(10)) + (170/71)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 1}
+{"n": 7, "depth": 4, "nodes": 6, "sqrt_depth": 1, "best_error": 8.138395513057617e-10, "expression": "(((68/69) * sqrt(10)) + (-177/71))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 2}
+{"n": 7, "depth": 4, "nodes": 1, "sqrt_depth": 0, "best_error": 1.8983452587661986e-09, "expression": "(3148/5049)", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 3}
+{"n": 7, "depth": 4, "nodes": 6, "sqrt_depth": 1, "best_error": 2.6297664046381897e-09, "expression": "(((8/89) * sqrt(17)) + (22/87))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 4}
+{"n": 7, "depth": 4, "nodes": 6, "sqrt_depth": 1, "best_error": 2.908798979461835e-09, "expression": "(((28/51) * sqrt(2)) + (-13/85))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 5}
+{"n": 7, "depth": 4, "nodes": 11, "sqrt_depth": 2, "best_error": 3.064175690958848e-09, "expression": "(((-5/7) * sqrt((((25/37) * sqrt(7)) + (-78/67)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 6}
+{"n": 7, "depth": 4, "nodes": 11, "sqrt_depth": 2, "best_error": 3.863755759780929e-09, "expression": "(((-5/7) * sqrt((((88/79) * sqrt(3)) + (-111/85)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 7}
+{"n": 7, "depth": 4, "nodes": 11, "sqrt_depth": 2, "best_error": 4.3254746451282244e-09, "expression": "(((-5/7) * sqrt((((46/87) * sqrt(6)) + (-45/67)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 8}
+{"n": 7, "depth": 4, "nodes": 11, "sqrt_depth": 2, "best_error": 5.292666416245595e-09, "expression": "(((-5/7) * sqrt((((-1/20) * sqrt(5)) + (25/34)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 9}
+{"n": 7, "depth": 4, "nodes": 11, "sqrt_depth": 2, "best_error": 1.0571465813846714e-08, "expression": "(((-5/7) * sqrt((((-8/65) * sqrt(21)) + (19/16)))) + (19/16))", "runtime": 145.061, "seed": 42, "dps": 80, "rank": 10}

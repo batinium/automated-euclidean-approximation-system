@@ -104,15 +104,12 @@ def _load_depth_scaling_data(results_root: Path) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def _load_field_vs_beam(results_root: Path) -> pd.DataFrame:
-    """Load the multi-run summary and filter to the canonical field/beam runs."""
+def _load_multi_run_summary(results_root: Path) -> pd.DataFrame:
+    """Load multi-run summary produced by plot_results.py --multi-run-grid."""
     csv_path = results_root / "multi_run_summary.csv"
     if not csv_path.exists():
         return pd.DataFrame()
-    df = pd.read_csv(csv_path)
-    beam_mask = df["run_mode"] == "beam"
-    field_mask = (df["run_mode"] == "field") & df["run_label"].str.contains("h20")
-    return df[beam_mask | field_mask].copy()
+    return pd.read_csv(csv_path)
 
 
 def plot_height_scaling(df: pd.DataFrame, out_dir: Path) -> None:
@@ -203,13 +200,7 @@ def plot_depth_scaling(df: pd.DataFrame, out_dir: Path) -> None:
     print(f"Saved {out_path}")
 
 
-def print_field_vs_beam_table(df: pd.DataFrame, out_dir: Path) -> None:
-    """Print and save field vs beam comparison table."""
-    if df.empty:
-        print("No field vs beam data available.")
-        return
-
-    print("\n=== Field vs Beam Comparison (RQ2) ===\n")
+def _field_vs_beam_pivot(df: pd.DataFrame) -> pd.DataFrame:
     pivot = df.pivot_table(
         index=["n", "depth"],
         columns="run_mode",
@@ -219,11 +210,77 @@ def print_field_vs_beam_table(df: pd.DataFrame, out_dir: Path) -> None:
     if "field" in pivot.columns and "beam" in pivot.columns:
         pivot["field_wins"] = pivot["field"] < pivot["beam"]
         pivot["ratio"] = pivot["beam"] / pivot["field"]
+    return pivot
 
-    print(pivot.to_string(float_format=lambda x: f"{x:.3e}" if isinstance(x, float) else str(x)))
-    csv_path = out_dir / "field_vs_beam_table.csv"
-    pivot.to_csv(csv_path)
-    print(f"\nSaved {csv_path}")
+
+def _pick_baseline_runs(df: pd.DataFrame) -> tuple[str | None, str | None]:
+    """Pick canonical baseline run names from multi-run summary.
+
+    Preference order:
+    1) Exact canonical names.
+    2) Non-justif runs matching canonical labels.
+    """
+    if df.empty:
+        return None, None
+
+    runs = set(df["run"].unique())
+    beam_exact = "beam_n7-11-13_d3_nodes15_bw2000"
+    field_exact = "field_n7-11-13_d3_h20_r30_bw2000"
+    beam_run = beam_exact if beam_exact in runs else None
+    field_run = field_exact if field_exact in runs else None
+
+    if beam_run is None:
+        cand = sorted(
+            r for r in runs
+            if r.startswith("beam_") and not r.startswith("justif_")
+        )
+        beam_run = cand[0] if cand else None
+    if field_run is None:
+        cand = sorted(
+            r for r in runs
+            if r.startswith("field_") and not r.startswith("justif_")
+            and "_h20_" in r and "_d3_" in r
+        )
+        field_run = cand[0] if cand else None
+
+    return beam_run, field_run
+
+
+def print_field_vs_beam_tables(df: pd.DataFrame, out_dir: Path) -> None:
+    """Print and save both baseline and best-of field-vs-beam tables."""
+    if df.empty:
+        print("No field vs beam data available.")
+        return
+
+    # Best-of comparison across all runs in each mode
+    bestof_df = df[df["run_mode"].isin(["beam", "field"])].copy()
+    bestof_pivot = _field_vs_beam_pivot(bestof_df)
+    print("\n=== Field vs Beam Comparison (Best-Of By Mode) ===\n")
+    print(bestof_pivot.to_string(float_format=lambda x: f"{x:.3e}" if isinstance(x, float) else str(x)))
+    bestof_csv = out_dir / "field_vs_beam_bestof_table.csv"
+    bestof_pivot.to_csv(bestof_csv)
+    print(f"\nSaved {bestof_csv}")
+
+    # Baseline-only comparison (canonical pair)
+    beam_run, field_run = _pick_baseline_runs(df)
+    if beam_run is None or field_run is None:
+        print("\nCould not identify canonical baseline runs; skipping baseline-only table.")
+        return
+    baseline_df = df[df["run"].isin([beam_run, field_run])].copy()
+    baseline_pivot = _field_vs_beam_pivot(baseline_df)
+    print("\n=== Field vs Beam Comparison (Baseline Runs Only) ===\n")
+    print(f"Using beam run:  {beam_run}")
+    print(f"Using field run: {field_run}\n")
+    print(baseline_pivot.to_string(float_format=lambda x: f"{x:.3e}" if isinstance(x, float) else str(x)))
+
+    baseline_csv = out_dir / "field_vs_beam_baseline_table.csv"
+    baseline_pivot.to_csv(baseline_csv)
+    print(f"\nSaved {baseline_csv}")
+
+    # Backward-compatible filename now points to baseline-only table
+    compat_csv = out_dir / "field_vs_beam_table.csv"
+    baseline_pivot.to_csv(compat_csv)
+    print(f"Saved {compat_csv} (baseline-only, backward-compatible name)")
 
 
 def print_height_scaling_table(df: pd.DataFrame, out_dir: Path) -> None:
@@ -439,9 +496,9 @@ def main() -> None:
     plot_depth_scaling(depth_df, out_dir)
     print_depth_scaling_table(depth_df, out_dir)
 
-    # Field vs beam
-    fvb_df = _load_field_vs_beam(root)
-    print_field_vs_beam_table(fvb_df, out_dir)
+    # Field vs beam (best-of + baseline-only)
+    fvb_df = _load_multi_run_summary(root)
+    print_field_vs_beam_tables(fvb_df, out_dir)
 
     # Saturation analysis
     plot_saturation(root, out_dir)

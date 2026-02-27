@@ -175,7 +175,7 @@ Aggregate tables and figures are produced by the analysis scripts in \texttt{scr
 \subsection{Field-first vs beam search}
 
 Table~\ref{tab:field-vs-beam} summarises the best errors for the field-first and beam baselines under matched budgets (depth $\le 3$, beam width $2000$, $H=20$ on the field side).
-Values are taken directly from the aggregated CSV (\texttt{field\_vs\_beam\_table.csv}).
+Values are taken directly from the baseline-only comparison CSV (\texttt{field\_vs\_beam\_baseline\_table.csv}).
 
 \begin{table}[t]
   \centering
@@ -208,6 +208,8 @@ Values are taken directly from the aggregated CSV (\texttt{field\_vs\_beam\_tabl
 The field-first search dominates the beam baseline at most depths, particularly at depth $3$ for $n=7$ where it improves the error by a factor of about $17$.
 The main exception is depth $2$ for $n=13$, where the beam search finds an exceptionally good surd and slightly outperforms the field search under the given budget.
 This supports the view that field-first search is more robust overall, but that expression-tree methods can occasionally find lucky configurations.
+As a robustness check, we also compute a best-of-by-mode table across all available runs (\texttt{field\_vs\_beam\_bestof\_table.csv}).
+Under stronger beam settings, beam search can overtake field search at deeper levels (notably depth $3$), while field remains stronger in shallower and mid-depth regimes in this benchmark set.
 
 \subsection{Height scaling at fixed depth}
 
@@ -360,4 +362,3 @@ Future work includes extending the search to higher-degree algebraic towers, exp
 We also hope that AEAS-style systems can serve as experimental testbeds for conjectures about algebraic approximation and constructive geometry.
 
 \end{document}
-
