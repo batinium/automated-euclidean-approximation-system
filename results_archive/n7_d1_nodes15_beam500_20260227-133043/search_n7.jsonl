@@ -1,0 +1,20 @@
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 3.9609905972404214e-05, "expression": "(53/85)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 1}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.0015101981412665166, "expression": "(5/8)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 2}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.01287383450490287, "expression": "(7/11)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 3}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.023489801858733506, "expression": "(3/5)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 4}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.04015646852540011, "expression": "(7/12)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 5}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.043176864807933146, "expression": "(2/3)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 6}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.052061230430162087, "expression": "(4/7)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 7}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.0679342463031779, "expression": "(5/9)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 8}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.07651019814126647, "expression": "(7/10)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 9}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.07803525640418807, "expression": "(6/11)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 10}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 4.7793785249439225e-06, "expression": "(((-2/5) * sqrt(17)) + (25/11))", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 1}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 3.78043587568877e-05, "expression": "(((1/9) * sqrt(5)) + (3/8))", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 2}
+{"n": 7, "depth": 1, "nodes": 1, "sqrt_depth": 0, "best_error": 3.9609905972404214e-05, "expression": "(53/85)", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 3}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 4.758583427444396e-05, "expression": "(((-10/11) * sqrt(2)) + (21/11))", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 4}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 6.973114656427803e-05, "expression": "(((5/7) * sqrt(15)) + (-15/7))", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 5}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 8.292263371634245e-05, "expression": "(((11/12) * sqrt(11)) + (-29/12))", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 6}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 0.00011699589124547494, "expression": "(((1/10) * sqrt(5)) + (2/5))", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 7}
+{"n": 7, "depth": 1, "nodes": 4, "sqrt_depth": 1, "best_error": 0.00011976260359003454, "expression": "((1/6) * sqrt(14))", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 8}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 0.00012182327498277967, "expression": "(((-13/12) * sqrt(3)) + (5/2))", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 9}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 0.00012479894498318433, "expression": "(((-1/12) * sqrt(11)) + (9/10))", "runtime": 0.208, "seed": 42, "dps": 50, "rank": 10}

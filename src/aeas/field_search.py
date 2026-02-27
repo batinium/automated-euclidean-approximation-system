@@ -15,6 +15,7 @@ A biquadratic refinement pass (adding C√n corrections) enriches each level.
 
 from __future__ import annotations
 
+import heapq
 import math
 from fractions import Fraction
 
@@ -217,12 +218,15 @@ def field_search(
     #  DEPTH 1 — A + B√m  (guided float pre-filter → tree build)
     # ═══════════════════════════════════════════════════════════════════
 
-    # Phase 1: fast float scoring — millions of (A, B, m) triples
-    d1_raw: list[tuple[float, Fraction, int, int, int]] = []
+    # Phase 1: fast float scoring with bounded heap (O(K) memory instead
+    # of O(millions)).  Stores (neg_err, a_index, p, q, m_index) so no
+    # Fraction objects live on the heap.
+    d1_keep = beam_width * 5
+    d1_heap: list[tuple[float, int, int, int, int]] = []
 
     for mi, m in enumerate(squarefrees):
         sv = sqrt_f[m]
-        for a in rationals:
+        for ai, a in enumerate(rationals):
             af = rat_f[a]
             b_target = (target_f - af) / sv
 
@@ -233,14 +237,16 @@ def field_search(
                     if p == 0:
                         continue
                     x = af + (p / q) * sv
-                    err = abs(x - target_f)
-                    d1_raw.append((err, a, p, q, mi))
-
-    d1_raw.sort()
+                    neg_err = -(abs(x - target_f))
+                    if len(d1_heap) < d1_keep:
+                        heapq.heappush(d1_heap, (neg_err, ai, p, q, mi))
+                    elif neg_err > d1_heap[0][0]:
+                        heapq.heapreplace(d1_heap, (neg_err, ai, p, q, mi))
 
     # Phase 2: build trees only for top survivors
     d1_built: set[tuple[Fraction, Fraction, int]] = set()
-    for err, a, p, q, mi in d1_raw[: beam_width * 5]:
+    for neg_err, ai, p, q, mi in sorted(d1_heap, reverse=True):
+        a = rationals[ai]
         b = Fraction(p, q)
         m = squarefrees[mi]
         key = (a, b, m)
@@ -363,15 +369,16 @@ def _search_nested_depth(
     if not inner_pool:
         return
 
-    # Fast float pre-filter
+    # Fast float pre-filter with bounded heap
     q_height = min(max_height, 14)
-    nested_raw: list[tuple[float, Fraction, int, int, int]] = []
+    nested_keep = beam_width * 5
+    nested_heap: list[tuple[float, int, int, int, int]] = []
 
     for idx, (v, _inner_tree) in enumerate(inner_pool):
         sv = math.sqrt(v)
         if sv < 1e-12:
             continue
-        for p in rationals:
+        for pi, p in enumerate(rationals):
             pf = rat_f[p]
             q_target = (target_f - pf) / sv
 
@@ -381,13 +388,19 @@ def _search_nested_depth(
                     if qp == 0:
                         continue
                     x = pf + (qp / qd) * sv
-                    err = abs(x - target_f)
-                    nested_raw.append((err, p, qp, qd, idx))
-
-    nested_raw.sort()
+                    neg_err = -(abs(x - target_f))
+                    if len(nested_heap) < nested_keep:
+                        heapq.heappush(
+                            nested_heap, (neg_err, pi, qp, qd, idx)
+                        )
+                    elif neg_err > nested_heap[0][0]:
+                        heapq.heapreplace(
+                            nested_heap, (neg_err, pi, qp, qd, idx)
+                        )
 
     built: set[tuple[Fraction, Fraction, int]] = set()
-    for err, p, qp, qd, idx in nested_raw[: beam_width * 5]:
+    for neg_err, pi, qp, qd, idx in sorted(nested_heap, reverse=True):
+        p = rationals[pi]
         q = Fraction(qp, qd)
         key = (p, q, idx)
         if key in built:

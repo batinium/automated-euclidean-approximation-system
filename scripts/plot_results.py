@@ -22,6 +22,39 @@ if str(_root / "src") not in sys.path:
 from aeas.evaluate import compute_target  # noqa: E402
 
 
+def _load_run_config(run_dir: Path) -> dict | None:
+    p = run_dir / "run_config.json"
+    if not p.exists():
+        return None
+    try:
+        with p.open() as fh:
+            return json.load(fh)
+    except Exception:
+        return None
+
+
+def _format_run_label(run_dir: Path) -> str:
+    cfg = _load_run_config(run_dir)
+    if not cfg or "args" not in cfg:
+        return run_dir.name
+    a = cfg["args"]
+    mode = a.get("mode", "?")
+    bw = a.get("beam_width", "?")
+    md = a.get("max_depth", "?")
+
+    if mode == "field":
+        mh = a.get("max_height", "?")
+        mr = a.get("max_radicand", "?")
+        return f"field d{md} bw{bw} h{mh} r{mr}"
+    if mode == "beam":
+        mn = a.get("max_nodes", "?")
+        return f"beam d{md} bw{bw} nodes{mn}"
+    if mode == "baseline":
+        mn = a.get("max_nodes", "?")
+        return f"baseline d{md} nodes{mn}"
+    return f"{mode} d{md} bw{bw}"
+
+
 def _pick_results_dir(root: Path, run: str | None) -> Path:
     """Choose which results directory to visualise.
 
@@ -59,6 +92,105 @@ def _iter_run_dirs(root: Path) -> list[Path]:
         if any(sub.glob("search_n*.jsonl")):
             runs.append(sub)
     return runs
+
+
+def _plot_multi_run_grid(root: Path, run_dirs: list[Path]) -> None:
+    """Plot a cross-run grid of best errors vs sqrt depth.
+
+    Each subplot corresponds to a target n, and within each subplot we show
+    the best error curve for every run directory under *root*.  This is
+    useful for comparing different algorithms / parameter sweeps (e.g.
+    beam vs field, different beam_width / max_height values) at a glance.
+    """
+    records: list[dict] = []
+    run_meta: dict[str, dict] = {}
+    for rd in run_dirs:
+        run_name = rd.name
+        run_meta[run_name] = {
+            "label": _format_run_label(rd),
+            "config": _load_run_config(rd),
+        }
+        for p in sorted(rd.glob("search_n*.jsonl")):
+            with open(p) as fh:
+                for line in fh:
+                    line = line.strip()
+                    if line:
+                        rec = json.loads(line)
+                        rec["run"] = run_name
+                        rec["run_label"] = run_meta[run_name]["label"]
+                        cfg = run_meta[run_name]["config"]
+                        if cfg and "args" in cfg:
+                            rec["run_mode"] = cfg["args"].get("mode")
+                        records.append(rec)
+
+    if not records:
+        print(
+            f"No aggregated records found under {root} "
+            "(no search_n*.jsonl files).",
+        )
+        return
+
+    df = pd.DataFrame(records)
+    ns = sorted(df["n"].unique())
+    run_labels = (
+        df[["run", "run_label"]]
+        .drop_duplicates()
+        .sort_values(["run_label", "run"])
+        .to_dict("records")
+    )
+
+    ncols = max(len(ns), 1)
+    fig, axes = plt.subplots(1, ncols, figsize=(5 * ncols, 4.5), squeeze=False)
+
+    for i, n in enumerate(ns):
+        ax = axes[0][i]
+        sub = df[df["n"] == n]
+        for rl in run_labels:
+            run_name = rl["run"]
+            label = rl["run_label"]
+            rsub = sub[sub["run"] == run_name]
+            if rsub.empty:
+                continue
+            best = rsub.groupby("depth")["best_error"].min()
+            ax.semilogy(
+                best.index,
+                best.values,
+                "o-",
+                lw=2,
+                ms=5,
+                label=label,
+            )
+        ax.set_xlabel("sqrt depth")
+        ax.set_ylabel("best |error|")
+        ax.set_title(f"cos(2π/{n})")
+        ax.grid(True, alpha=0.3)
+        if i == len(ns) - 1:
+            # Place legend once, on the last subplot to avoid clutter.
+            ax.legend(fontsize=7, loc="upper right")
+
+    fig.suptitle(
+        "Best Constructible Approximation Error — multi-run grid",
+        fontsize=13,
+        y=1.02,
+    )
+    fig.tight_layout()
+    out_path = root / "multi_run_error_vs_depth.png"
+    fig.savefig(out_path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    print(f"Saved {out_path}")
+
+    # Also emit an aggregated CSV for programmatic comparison.
+    # One row per (run, n, depth) with the best error and the expression that achieved it.
+    cols = ["run", "run_label", "run_mode", "n", "depth", "best_error", "expression", "nodes", "sqrt_depth", "dps", "runtime"]
+    # For each (run,n,depth), pick the row with minimal best_error (rank may not be 1 if input contains mixed records).
+    gb = df.sort_values("best_error").groupby(["run", "n", "depth"], as_index=False).first()
+    for c in cols:
+        if c not in gb.columns:
+            gb[c] = None
+    gb = gb[cols].sort_values(["n", "depth", "best_error", "run_label"])
+    csv_path = root / "multi_run_summary.csv"
+    gb.to_csv(csv_path, index=False)
+    print(f"Saved {csv_path}")
 
 
 def _plot_one_dir(results_dir: Path) -> None:
@@ -243,12 +375,28 @@ def main() -> None:
         help="Generate figures for every run directory under --root that "
         "contains search_n*.jsonl.",
     )
+    ap.add_argument(
+        "--multi-run-grid",
+        action="store_true",
+        help=(
+            "Generate a single cross-run grid figure (best error vs sqrt depth) "
+            "using all run subdirectories under --root."
+        ),
+    )
     args = ap.parse_args()
 
     root = Path(args.root)
     if not root.exists():
         print(f"No such results root: {root}")
         return
+
+    # Optional aggregated multi-run grid (across all run directories).
+    if args.multi_run_grid:
+        run_dirs = _iter_run_dirs(root)
+        if not run_dirs:
+            print(f"No run directories with search_n*.jsonl under {root}")
+        else:
+            _plot_multi_run_grid(root, run_dirs)
 
     if args.all_runs:
         run_dirs = _iter_run_dirs(root)
