@@ -8,6 +8,7 @@ It replaces previous split notes (`PATCHLIST.md`, `RESULTS_PICKUP.md`).
 Completed:
 - Full reruns completed (core + extras + justification sweeps).
 - Analysis regenerated and aligned with manuscript.
+- CS-oriented manuscript is now the canonical and only maintained report source (`report/aeas_paper.tex`).
 - Field-vs-beam reporting split into:
   - baseline-only table
   - best-of-by-mode table

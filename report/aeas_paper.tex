@@ -1,12 +1,13 @@
 % AEAS paper draft – generated skeleton with real experiment data filled in.
 \documentclass[11pt]{article}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{microtype}
 \usepackage{hyperref}
 
-\title{Automated Quadratic-Tower Search for Approximating Non-Constructible Cosines}
+\title{A Field-First Search System for Constructible Approximation of Non-Constructible Cosines}
 \author{TODO: Author Name(s)}
 \date{\today}
 
@@ -14,37 +15,34 @@
 \maketitle
 
 \begin{abstract}
-A regular $n$-gon is constructible by ruler and compass iff $n$ is a product of a power of two and distinct Fermat primes.
-For non-constructible $n$ (e.g.\ $7, 11, 13$) the exact values $\alpha_n = \cos(2\pi/n)$ live in real subfields of cyclotomic fields of degree greater than a power of two, and therefore cannot be obtained inside the quadratic closure of $\mathbb{Q}$.
-This paper investigates how well such non-constructible cosines can nevertheless be approximated by \emph{constructible} numbers: elements of quadratic field towers of bounded depth and bounded coefficient height.
+This paper presents the \emph{Automated Euclidean Approximation System} (AEAS), a reproducible search system for constructible-number approximations to non-constructible targets of the form $\alpha_n=\cos(2\pi/n)$.
+The mathematical setting is classical (constructible reals via quadratic towers), but the main contribution is algorithmic: AEAS replaces syntax-first expression enumeration with a field-first normal-form search, combining fast float pre-filtering, selective tree materialisation, high-precision verification, and deterministic diversity-preserving pruning.
 
-We introduce the \emph{Automated Euclidean Approximation System} (AEAS), which performs a field-first search over quadratic towers and returns explicit nested-square-root expressions built from $\{0,1\}$ using $+,-,\times,\div,\sqrt{\phantom{x}}$.
-Empirically, for $n \in \{7,11,13\}$ we observe a clear dependence of the best approximation error $|x - \alpha_n|$ on both the sqrt-depth and a natural ``height'' parameter controlling the granularity of rational coefficients.
-Compared to an expression-tree beam search baseline, the field-first search is generally more robust in our baseline configuration under comparable practical budgets.
-We also identify and characterise a \emph{coefficient resolution floor}: at fixed height, increasing sqrt-depth can cease to improve the best error, although implementation-level coefficient-search limits at deeper levels also influence this saturation.
+We evaluate on $n\in\{7,11,13\}$ under controlled depth/height budgets and provide baseline and robustness comparisons against expression-tree beam search.
+Results show clear depth-height tradeoffs, strong practical performance of the field-first pipeline in baseline settings, and a depth-saturation behaviour consistent with coefficient-resolution limits.
+We also report parameter-sensitivity sweeps for beam width, radicand bound, precision, and beam node budgets, enabling a transparent justification of default settings and computational tradeoffs.
 \end{abstract}
 
 \section{Introduction}
 
-The classical Gauss--Wantzel theorem completely characterises which regular $n$-gons are constructible with ruler and compass: those with $n = 2^k p_1 \cdots p_m$, where the $p_i$ are distinct Fermat primes.
-For non-constructible $n$ such as $7, 11,$ or $13$, the exact value $\alpha_n = \cos(2\pi/n)$ lies in a number field whose degree over $\mathbb{Q}$ is not a power of two, and thus $\alpha_n$ is not a constructible real number.
+The Gauss--Wantzel theorem implies that many regular polygons are not ruler-and-compass constructible.
+For such cases (e.g.\ $n\in\{7,11,13\}$), $\alpha_n=\cos(2\pi/n)$ is non-constructible, yet can still be approximated by constructible numbers.
 
-In contrast, the constructible reals themselves form the smallest field extension of $\mathbb{Q}$ closed under finitely many applications of
+The constructible reals form the smallest field extension of $\mathbb{Q}$ closed under finitely many applications of
 \[
   x \mapsto -x, \quad x \mapsto x^{-1}, \quad (x,y) \mapsto x \pm y, \quad (x,y) \mapsto xy, \quad x \mapsto \sqrt{x}
 \]
 whenever the square root is real.
-Every constructible real can therefore be expressed as a nested square-root expression with rational leaves, and can be viewed as an element of a tower of quadratic field extensions of $\mathbb{Q}$.
-This perspective naturally leads to a computational question:
+Every constructible real can therefore be represented either syntactically (expression trees) or semantically (coordinates in quadratic towers).
+The central systems question is how to search this space efficiently and reproducibly.
 
 \medskip
-\noindent\textbf{RQ1 (approximation law).}
+\noindent\textbf{RQ1 (performance law).}
 \emph{How does the best achievable error $|x - \cos(2\pi/n)|$ depend on the sqrt-depth and coefficient height within quadratic-tower fields?}
 
 \medskip
-At the same time, exhaustive enumeration of nested square-root expressions quickly becomes intractable.
-Previous work in this project used a beam search over expression trees, which suffers from redundancy and beam collapse at higher depths.
-The present paper instead searches \emph{first} in the underlying number fields and only builds expression trees for the most promising candidates, raising a second question:
+Exhaustive tree enumeration becomes intractable quickly due to combinatorial redundancy.
+Prior project versions used beam search over expression trees; here we redesign the search pipeline to operate field-first and materialise trees only for top survivors, raising a second question:
 
 \medskip
 \noindent\textbf{RQ2 (algorithmic comparison).}
@@ -53,10 +51,10 @@ The present paper instead searches \emph{first} in the underlying number fields 
 \medskip
 Our contributions are:
 \begin{itemize}
-  \item We formalise a field-first search over quadratic towers of bounded sqrt-depth and coefficient height, including a fast float pre-filter and a diversity-preserving pruning scheme (Figure~\ref{fig:architecture}).
-  \item We implement AEAS, an automated system that searches for constructible approximations to $\cos(2\pi/n)$ for $n \in \{7,11,13\}$ and returns human-readable nested-square-root expressions (Figure~\ref{fig:expr-trees}).
-  \item We empirically characterise how the best error scales with depth and height (RQ1), and show that field-first search is competitive and often stronger than an expression-tree beam baseline in the baseline configuration (RQ2).
-  \item We identify a coefficient resolution floor: beyond a certain depth, additional layers of $\sqrt{\phantom{x}}$ often cease to improve the error unless the coefficient height budget is increased (Figure~\ref{fig:saturation}).
+  \item \textbf{Search-system design.} We formalise a field-first search over quadratic towers with two-stage candidate handling (float pre-filter $\rightarrow$ selective symbolic materialisation) and deterministic diversity-preserving pruning (Figure~\ref{fig:architecture}).
+  \item \textbf{Implementation artifact.} We implement AEAS as a reproducible pipeline that emits machine-readable run records, summaries, and visual diagnostics.
+  \item \textbf{Empirical evaluation.} We characterise depth-height performance scaling and compare against a beam-search baseline under comparable practical budgets.
+  \item \textbf{Sensitivity analysis.} We include compact sweeps for beam width, radicand bound, precision, and beam node budgets to document default-setting tradeoffs.
 \end{itemize}
 
 \section{Background}
@@ -82,7 +80,7 @@ When $n$ is not of Gauss--Wantzel form, the degree $[\mathbb{Q}(\alpha_n):\mathb
 We focus on the smallest such cases $n \in \{7,11,13\}$.
 They already exhibit the phenomenon that motivates this work: high-quality approximants can live at moderate tower depth but require sufficiently fine coefficient resolution.
 
-\section{Methods: the AEAS system}
+\section{System and Algorithms}
 
 \subsection{Expression representation}
 
@@ -133,6 +131,77 @@ Invalid expressions (division by zero, negative square roots, non-finite results
 The pool is sorted by a stable key \((\text{error}, \text{node count}, \text{string})\), ensuring reproducible ranking.
 The search returns, for each depth, the list of top-$K$ candidates with their errors and expression trees.
 
+\subsection{Algorithmic details and computational profile}
+
+The pseudocode below summarises the implemented field-first pipeline.
+The core systems idea is to keep expensive symbolic materialisation and high-precision evaluation off the critical path by scoring very large candidate sets in float arithmetic first, then promoting only top survivors.
+
+\paragraph{Implementation-aligned pseudocode (field-first search).}
+\begin{quote}\small
+\begin{verbatim}
+Input: alpha_n, max_depth, max_height, max_radicand, beam_width, dps
+squarefrees <- squarefree_up_to(max_radicand)
+rationals   <- bounded_rationals(max_height)
+pool <- register(depth0 rationals + best rational approximants)
+
+for d in 1..max_depth:
+  if d == 1:
+    heap_size <- 5 * beam_width
+    for m in squarefrees:
+      for A in rationals:
+        B* <- (alpha_n - A) / sqrt(m)
+        for B in local_rational_neighborhood(B*):
+          score (A,B,m) in float and keep top heap_size in bounded heap
+    materialize trees only for heap survivors
+    evaluate survivors with mpmath(dps), reject invalid, register
+    biquadratic refine top depth-1 surds with + C*sqrt(r)
+  else:
+    inner <- positive depth-(d-1) trees, capped to top 500
+    q_h   <- min(max_height, 14)   # current implementation cap
+    float-score P + Q*sqrt(inner) neighborhood tuples with bounded heap
+    materialize/evaluate top survivors and register
+    biquadratic refine top depth-d candidates
+
+  deterministic prune by sort key (error, node_count, to_str)
+  with per-sqrt-depth reservation; snapshot best list for depth d
+
+return best candidates per depth
+\end{verbatim}
+\end{quote}
+
+\paragraph{Complexity drivers.}
+Table~\ref{tab:complexity} reports practical search-size drivers.
+Ignoring constants, depth-1 float scoring scales roughly as
+\[
+\mathcal{O}\!\left(|\mathcal{M}| \cdot |\mathcal{A}| \cdot H \cdot w_B\right),
+\]
+where $|\mathcal{M}|$ is the number of squarefree radicands, $|\mathcal{A}|$ is the depth-0 rational pool size, $H$ is the denominator bound, and $w_B$ is the local numerator window width.
+Depth-$d\ge 2$ scoring similarly scales with the number of retained inner candidates.
+In contrast, symbolic/materialised candidates are capped by beam-related constants, keeping memory usage near-linear in \texttt{beam\_width}.
+
+\begin{table}[t]
+  \centering
+  \caption{Main computational components and dominant scaling factors in AEAS field-first search.}
+  \label{tab:complexity}
+  \begin{tabular}{p{0.31\linewidth}p{0.29\linewidth}p{0.32\linewidth}}
+    \toprule
+    Stage & Dominant count drivers & Practical control knobs \\
+    \midrule
+    Depth-0 rationals & $|\mathcal{A}|$ (bounded reduced fractions) & \texttt{max\_height}, value interval \\
+    Depth-1 float scoring & $|\mathcal{M}|\cdot|\mathcal{A}|\cdot H\cdot w_B$ & \texttt{max\_radicand}, \texttt{max\_height}, neighbourhood width \\
+    Depth-1 materialisation & top-$K$ survivors only & \texttt{beam\_width}, survivor multiplier \\
+    Depth-$d\ge2$ float scoring & $|\mathcal{I}_{d-1}|\cdot|\mathcal{P}|\cdot q_h\cdot w_Q$ & retained inner cap, \texttt{max\_height}, depth-$\ge2$ denominator cap \\
+    High-precision evaluation & materialised candidates only & \texttt{dps}, cache hit rate \\
+    Global pruning & pool size before prune & \texttt{beam\_width}, diversity reservation \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Implementation choices.}
+The implementation uses bounded heaps for float pre-filter stages (instead of storing all raw tuples), structural canonicalisation-before-insert for deterministic deduplication, and cached \texttt{mpmath} evaluation with guard digits (\texttt{dps}+15).
+Invalid evaluations are rejected early and never propagated.
+These implementation choices are consistent with the runtime/memory patterns observed in the reported sweeps.
+
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.9\linewidth]{../results/analysis/search_architecture.png}
@@ -170,8 +239,8 @@ A control experiment at $H=64$ shows how raising the coefficient resolution shif
 
 All experiments are deterministic given the configuration, and each run writes a machine-readable summary to the \texttt{results/} directory.
 Aggregate tables and figures are produced by the analysis scripts in \texttt{scripts/analyse\_scaling.py} and \texttt{scripts/visualize\_search.py}.
-We additionally ran compact parameter-sensitivity sweeps to justify default settings: field beam-width (\(1000,2000,5000\)), field radicand bound (\(20,30,40\)), field precision (\(\texttt{dps}=60,80,120\)), and beam node budgets (\(15,25,35\)).
-These sweeps support \texttt{beam\_width=2000} and \texttt{dps=80} as practical defaults, while showing that beam-baseline quality is highly sensitive to \texttt{max\_nodes}.
+We additionally ran compact parameter-sensitivity sweeps for default-setting: field beam-width (\(1000,2000,5000\)), field radicand bound (\(20,30,40\)), field precision (\(\texttt{dps}=60,80,120\)), and beam node budgets (\(15,25,35\)).
+These sweeps show that \texttt{beam\_width=2000} and \texttt{dps=80} are a practical quality/runtime tradeoff for this benchmark set, and that beam-baseline quality changes strongly with \texttt{max\_nodes}.
 
 \section{Results}
 
@@ -184,7 +253,7 @@ Values are taken directly from the baseline-only comparison CSV (\texttt{field\_
   \centering
   \caption{Best errors for field-first vs beam search under matched budgets.
   Each entry reports the minimum observed $|x - \cos(2\pi/n)|$ at the given depth.
-  A larger ratio indicates a stronger advantage for the field-first search.}
+  A ratio $>1$ indicates a lower error for the field-first search; a ratio $<1$ indicates a lower error for beam search.}
   \label{tab:field-vs-beam}
   \begin{tabular}{cccccc}
     \toprule
@@ -208,11 +277,33 @@ Values are taken directly from the baseline-only comparison CSV (\texttt{field\_
   \end{tabular}
 \end{table}
 
-In the baseline configuration, the field-first search dominates the beam baseline at most depths, particularly at depth $3$ for $n=7$ where it improves the error by a factor of about $17$.
-The main exception is depth $2$ for $n=13$, where the beam search finds an exceptionally good surd and slightly outperforms the field search under the given budget.
-This supports the view that field-first search is more robust in this baseline comparison, but expression-tree methods can occasionally find lucky configurations.
-As a robustness check, we also compute a best-of-by-mode table across all available runs (\texttt{field\_vs\_beam\_bestof\_table.csv}).
-Under stronger beam settings, beam search can overtake field search at deeper levels (notably depth $3$), while field remains stronger in shallower and mid-depth regimes in this benchmark set.
+In the baseline configuration, field-first has lower error in 9 of 12 \((n,\text{depth})\) cells in Table~\ref{tab:field-vs-beam}; there is one tie \((n=11,\text{depth}=0)\) and beam has lower error in 2 cells \((n=13,\text{depth}=2,3)\).
+At \(n=7,\text{depth}=3\), the beam/field ratio is \(1.7\times10^{1}\), i.e., field-first is lower by about \(17\times\) in this setting.
+As an additional check, we also report a best-of-by-mode table across all available runs (\texttt{field\_vs\_beam\_bestof\_table.csv}).
+In that broader table, beam search attains lower error at some deeper settings, so the ordering depends on the selected compute budget and parameter regime.
+
+\subsection{Parameter-sensitivity ablations (real run data)}
+
+Table~\ref{tab:ablations} summarises compact sensitivity runs that motivated default settings.
+All values are taken from run summaries in \texttt{results/justif\_*/\allowbreak *summary.csv}, using depth-3 rows for each $n\in\{7,11,13\}$.
+
+\begin{table}[t]
+  \centering
+  \caption{Ablation-style parameter sensitivity from executed runs (depth 3).}
+  \label{tab:ablations}
+  \begin{tabular}{p{0.30\linewidth}p{0.36\linewidth}p{0.26\linewidth}}
+    \toprule
+    Sweep (fixed others) & Quality effect (best error) & Runtime effect (avg over n) \\
+    \midrule
+    Field \texttt{beam\_width}: $1000,2000,5000$ & No depth-3 error change for $n=7,11,13$ & $4.62\rightarrow5.24\rightarrow7.63$ s \\
+    Field \texttt{max\_radicand}: $20,30,40$ & Depth-3 factor $r20/r40$: $n=7$ $1.89\times$, $n=11$ $2.04\times$, $n=13$ $1.00\times$ & $5.17\rightarrow5.20\rightarrow5.28$ s \\
+    Field \texttt{dps}: $60,80,120$ & No depth-3 error change for $n=7,11,13$ & $5.18\rightarrow5.23\rightarrow5.26$ s \\
+    Beam \texttt{max\_nodes}: $15,25,35$ & Depth-3 factor $15/35$: $n=7$ $124.7\times$, $n=11$ $115.4\times$, $n=13$ $213.0\times$ & $56.91\rightarrow65.69\rightarrow183.98$ s \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+These ablations indicate that \texttt{beam\_width=2000} and \texttt{dps=80} are a reasonable default in field mode for this benchmark set, while beam-baseline quality is strongly dependent on \texttt{max\_nodes}.
 
 \subsection{Height scaling at fixed depth}
 
@@ -246,7 +337,7 @@ For $n=11$ and $n=13$, the transition happens at slightly different heights, but
   \centering
   \includegraphics[width=0.9\linewidth]{../results/analysis/height_scaling_loglog.png}
   \caption{Height scaling: log--log plot of best error versus coefficient height $H$ at depths $d=1$ and $d=2$ for $n\in\{7,11,13\}$.
-  Straight-line fits in log--log space suggest approximate power-law behaviour at small $H$, followed by saturation.}
+  Straight-line fits in log--log space are shown as descriptive trends at small $H$, followed by saturation.}
   \label{fig:height-scaling}
 \end{figure}
 
@@ -281,7 +372,7 @@ Because these are minima pooled across runs with different maximum depths, they 
   \centering
   \includegraphics[width=0.85\linewidth]{../results/analysis/depth_scaling_h32.png}
   \caption{Best error versus sqrt-depth at height $H=32$ for $n\in\{7,11,13\}$ (semilog scale).
-  Depth~3 significantly improves over depth~2 for $n=7$ and $n=11$, but depth~4 provides no further gain for any $n$.}
+  At $H=32$, depth~3 is lower than depth~2 for $n=7$ and $n=11$, while depth~4 shows no additional gain for any $n$ in this dataset.}
   \label{fig:depth-scaling}
 \end{figure}
 
@@ -303,9 +394,9 @@ This is consistent with a coefficient resolution floor, while also being influen
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\linewidth]{../results/analysis/tower_layers_n7.png}\\[0.5ex]
-  \includegraphics[width=0.9\linewidth]{../results/analysis/tower_layers_n11.png}\\[0.5ex]
-  \includegraphics[width=0.9\linewidth]{../results/analysis/tower_layers_n13.png}
+  \includegraphics[width=0.32\linewidth]{../results/analysis/tower_layers_n7.png}\hfill
+  \includegraphics[width=0.32\linewidth]{../results/analysis/tower_layers_n11.png}\hfill
+  \includegraphics[width=0.32\linewidth]{../results/analysis/tower_layers_n13.png}
   \caption{Tower ``layers'' view: $-\log_{10}$ of the best error at each sqrt-depth for $n=7,11,13$ (using \texttt{depth\_scaling\_table.csv}).
   Each horizontal bar corresponds to one depth level; labels indicate absolute error.}
   \label{fig:tower-layers}
@@ -319,9 +410,9 @@ These trees are extracted directly from the search logs (\texttt{search\_n7.json
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.8\linewidth]{../results/analysis/expr_tree_n7_d3_r1.png}\\[0.5ex]
-  \includegraphics[width=0.8\linewidth]{../results/analysis/expr_tree_n11_d3_r1.png}\\[0.5ex]
-  \includegraphics[width=0.8\linewidth]{../results/analysis/expr_tree_n13_d3_r1.png}
+  \includegraphics[width=0.32\linewidth]{../results/analysis/expr_tree_n7_d3_r1.png}\hfill
+  \includegraphics[width=0.32\linewidth]{../results/analysis/expr_tree_n11_d3_r1.png}\hfill
+  \includegraphics[width=0.32\linewidth]{../results/analysis/expr_tree_n13_d3_r1.png}
   \caption{Expression trees for the best depth-3 candidates at height $H=32$ for $n=7,11,13$.
   Each node is an operation or rational constant; edges correspond to the tree structure.}
   \label{fig:expr-trees}
@@ -329,7 +420,7 @@ These trees are extracted directly from the search logs (\texttt{search\_n7.json
 
 Finally, Figure~\ref{fig:heatmap} shows the depth-1 search landscape for $x = A + B\sqrt{m}$ with $m=2$ and height $H=32$, for $n=7$ and $n=11$.
 Each heatmap plots $\log_{10}|A + B\sqrt{2} - \cos(2\pi/n)|$ over a grid of rational $(A,B)$ values.
-The structure of these landscapes helps explain why the guided coefficient search is effective: the best regions are localised and smooth, so a small rational neighbourhood around the ideal real coefficient suffices to capture the optimum.
+In these plotted slices, low-error regions are localised and relatively smooth; this is consistent with the guided-coefficient neighbourhood strategy used in the field-first search.
 
 \begin{figure}[t]
   \centering
@@ -343,15 +434,15 @@ The structure of these landscapes helps explain why the guided coefficient searc
 
 \section{Discussion}
 
-Our experiments suggest a clear answer to RQ1: within quadratic towers of bounded depth and coefficient height, the best achievable error follows a mixed depth-height behaviour in which both parameters matter.
+For RQ1, results indicate a mixed depth-height performance law: both parameters matter, and gains are regime-dependent rather than monotone in depth alone.
 At small heights, depth increases can yield dramatic improvements---for instance, at $H=32$ for $n=7$ the error drops from $8.68\times10^{-7}$ at depth~0 to $2.51\times10^{-10}$ at depth~3.
 But for each fixed height there is a depth at which the error saturates, beyond which increasing depth alone does not help.
 Raising the height budget lowers this floor and can shift the saturation depth.
 
-For RQ2, the field-first search provides a robust and interpretable exploration of the space of constructible numbers in the baseline configuration.
+For RQ2, the baseline table shows that field-first is lower-error in most reported baseline cells, but not all.
 By working in normal form and using a guided coefficient search, it avoids the syntactic redundancy of expression trees and maintains diversity across different sqrt-depth levels.
 The beam baseline is easier to implement but more fragile: it can collapse at higher depths, with the beam filled by near-duplicates that crowd out promising but temporarily suboptimal candidates.
-The quantitative results in Table~\ref{tab:field-vs-beam} and Figures~\ref{fig:depth-scaling}--\ref{fig:tower-layers} make this contrast explicit, while the best-of robustness table shows that this contrast can change under stronger beam budgets.
+Table~\ref{tab:field-vs-beam} and Figures~\ref{fig:depth-scaling}--\ref{fig:tower-layers} show this baseline contrast, while the best-of table shows that ranking can change under stronger beam budgets.
 
 \subsection{Limitations}
 
@@ -361,16 +452,15 @@ Second, depth-scaling curves are pooled minima across multiple runs, which can o
 Third, the current field implementation caps the depth-$\ge2$ outer-coefficient denominator search (\texttt{q\_height} $\le 14$), which can affect observed saturation behaviour.
 Fourth, results are deterministic but do not include uncertainty intervals or stochastic robustness statistics.
 
-More broadly, we view AEAS as a proof-of-concept for using automated search over algebraic structures to test approximation hypotheses.
-The same framework could be applied to other non-constructible targets, higher-degree towers, or alternative cost models (e.g.\ penalising expression size or radical complexity).
+From a systems perspective, AEAS is a proof-of-concept for search over algebraic structures with explicit reproducibility and determinism constraints.
+The framework can be extended to other non-constructible targets, higher-degree towers, and alternative objective functions (e.g.\ size-penalised expressions).
 
-\section{Conclusion and future work}
+\section{Conclusion and Future Work}
 
-We presented AEAS, an automated system that searches quadratic towers of bounded depth and coefficient height for constructible approximations to non-constructible cosines.
-Our field-first search algorithm is competitive and often stronger than a tree-based beam baseline in the baseline configuration, and reveals a coefficient-resolution effect that explains much of the observed saturation with respect to depth.
-These findings highlight the importance of viewing constructible approximations through the lens of field extensions rather than raw syntax.
+We presented AEAS as a computational search system for constructible approximation in quadratic towers.
+In the reported baseline settings, field-first is frequently lower-error than the tree-based beam baseline, and the sensitivity runs identify regimes where that ordering narrows or reverses.
+The main technical takeaway is that semantic search-space design (field-first normal forms) materially changes practical search efficiency compared with raw syntax-first enumeration.
 
-Future work includes extending the search to higher-degree algebraic towers, exploring additional targets beyond $\cos(2\pi/n)$, and integrating structural filters such as Chebyshev residuals to further reduce the cost of high-precision evaluation.
-We also hope that AEAS-style systems can serve as experimental testbeds for conjectures about algebraic approximation and constructive geometry.
+Future work includes extending to higher-degree towers, adding explicit compute-budget-matched comparisons, integrating Chebyshev-style structural filters, and releasing benchmark-style evaluation suites for algebraic approximation search.
 
 \end{document}
