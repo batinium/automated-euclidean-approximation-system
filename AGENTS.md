@@ -3,11 +3,19 @@
 ## What this project is
 
 **Automated Euclidean Approximation System (AEAS)** — a Python prototype
-that searches quadratic-radical expression trees to approximate `cos(2π/n)`
-for non-constructible polygon side counts (n = 7, 11, 13, …). It generates
-constructible-number candidates (built from `0` and `1` using `+, −, ×, ÷, √`)
-under bounded sqrt-depth and node count, evaluates them at arbitrary precision
-via `mpmath`, and reports the best approximations.
+that searches constructible-number approximations to `cos(2π/n)` for
+non-constructible polygon side counts (n = 7, 11, 13, …).
+
+The system has two search backends:
+- **Tree-based** (`beam_search`, `baseline_enumerate`) — enumerates expression
+  trees built from `{0,1}` with `+, −, ×, ÷, √`.
+- **Field-first** (`field_search`) — enumerates elements by their coordinates
+  in quadratic field towers (normal forms), then materialises ExprNode trees
+  only for top candidates.  This avoids the exponential redundancy of tree
+  enumeration and eliminates beam collapse at higher sqrt depths.
+
+Both backends evaluate candidates at arbitrary precision via `mpmath` and
+report the best approximations.
 
 ## Repository layout
 
@@ -21,14 +29,18 @@ via `mpmath`, and reports the best approximations.
 │   ├── expr.py               # ExprNode (immutable tree node) + Op enum
 │   ├── canonicalize.py       # Canonicalization, constant folding, identity elim.
 │   ├── evaluate.py           # mpmath evaluation with global result cache
-│   └── search.py             # beam_search() and baseline_enumerate()
+│   ├── search.py             # beam_search() and baseline_enumerate()
+│   ├── chebyshev.py          # Chebyshev polynomial T_n evaluation and residual
+│   └── field_search.py       # field_search() — normal-form quadratic-tower search
 ├── scripts/
 │   ├── run_search.py         # CLI entry point (argparse + rich output)
 │   └── plot_results.py       # Reads results/ JSONL → matplotlib PNGs
 ├── tests/
 │   ├── test_expr.py          # ExprNode construction, depth, hashing, immutability
 │   ├── test_evaluate.py      # Evaluation correctness, safety checks, targets
-│   └── test_canonicalize.py  # Folding, identities, idempotence, hash stability
+│   ├── test_canonicalize.py  # Folding, identities, idempotence, hash stability
+│   ├── test_chebyshev.py     # T_n identity, float/mpmath agreement, residuals
+│   └── test_field_search.py  # Utilities, tree builders, search quality, format
 ├── data/                     # Placeholder for input data
 └── results/                  # Output directory (JSONL, CSV, figures/)
 ```
@@ -46,7 +58,10 @@ Python ≥ 3.11. Key runtime deps: `mpmath`, `numpy`, `matplotlib`, `pandas`,
 ## Running
 
 ```bash
-# Full search (beam, ~30s per n value)
+# Field-first search (recommended, ~80s per n value)
+python scripts/run_search.py --mode field --n 7 11 13 --max_depth 3 --progress
+
+# Tree-based beam search (legacy, ~30s per n value)
 python scripts/run_search.py --n 7 11 13 --max_depth 3 --max_nodes 15 --beam_width 2000
 
 # Baseline (exhaustive, very slow for large limits)
@@ -59,7 +74,7 @@ python scripts/run_search.py --mode baseline --max_depth 1 --max_nodes 7
 python scripts/plot_results.py
 python scripts/plot_results.py --run n7-11-13_d3_nodes15_beam2000_YYYYMMDD-HHMMSS
 
-# Tests
+# Tests (101 tests across 5 files)
 pytest tests/ -v
 ```
 
@@ -69,12 +84,14 @@ pytest tests/ -v
 |------|---------|---------|
 | `--n` | `7 11 13` | Target polygon side counts |
 | `--max_depth` | `3` | Max sqrt nesting depth |
-| `--max_nodes` | `15` | Max tree node count |
+| `--max_nodes` | `15` | Max tree node count (auto ≥50 for field mode) |
 | `--beam_width` | `2000` | Candidates retained per round |
 | `--dps` | `80` | mpmath decimal places |
 | `--seed` | `42` | Metadata only (search is deterministic) |
-| `--mode` | `beam` | `beam` or `baseline` |
-| `--const_set` | `0,1,-1,1/2,2,3/2,3,1/4,1/3` | Seed rationals (comma-sep) |
+| `--mode` | `beam` | `beam`, `baseline`, or `field` |
+| `--const_set` | `0,1,-1,1/2,2,3/2,3,1/4,1/3` | Seed rationals (beam/baseline) |
+| `--max_height` | `20` | Max numerator/denominator for coefficients (field) |
+| `--max_radicand` | `30` | Largest squarefree radicand to search (field) |
 | `--top_k` | `10` | Results displayed per depth level |
 | `--output_root` | `results` | Parent directory for all runs |
 | `--run_name` | *auto* | Optional explicit run subdirectory name |
@@ -136,7 +153,41 @@ the depth-0 beam is populated entirely by 1-node rational constants.
 
 `compute_target(n, dps)` → `cos(2π/n)` at given precision.
 
-### Search (`src/aeas/search.py`)
+### Chebyshev module (`src/aeas/chebyshev.py`)
+
+Provides `chebyshev_T(n, x, dps)` and a fast float variant `chebyshev_T_float`.
+For target α = cos(2π/n), the identity T_n(α) = 1 gives a structurally
+meaningful error signal via `chebyshev_residual(n, x)` = |T_n(x) − 1|.
+
+### Field-first search (`src/aeas/field_search.py`) — **recommended**
+
+`field_search(target, n_val, max_depth, max_height, max_radicand, …)`
+
+The core insight: every constructible number of sqrt-depth d lives in a
+quadratic field tower Q ⊂ Q(√a₁) ⊂ Q(√a₁, √(b+c√a₁)) ⊂ … of degree
+dividing 2^d.  Instead of enumerating syntax trees (exponential redundancy),
+the field search enumerates **normal-form coordinates** in these towers:
+
+- **Depth 0** — rationals A with bounded height, plus continued-fraction
+  best-approximation with larger denominator.
+- **Depth 1** — A + B√m for squarefree m ≤ max_radicand.  Uses guided
+  coefficient search: for each (A, m), compute B_opt = (α−A)/√m, then
+  search nearby rationals.  Followed by **biquadratic refinement**: add
+  C√n correction to top depth-1 results.
+- **Depth d ≥ 2** — P + Q√(inner_{d−1}) where inner is a positive-valued
+  depth-(d−1) expression from the previous level.  Same guided coefficient
+  search for (P, Q).  Followed by biquadratic refinement at each level.
+
+**Two-phase architecture** for each depth:
+1. **Float pre-filter** — evaluate millions of (coefficient, radicand) tuples
+   using fast float arithmetic.  Sort by error, take top N.
+2. **Tree materialisation** — build canonical ExprNode trees and evaluate with
+   mpmath only for the top survivors.
+
+**Diversity-preserving pruning** across sqrt-depth levels ensures deeper
+candidates survive so they can serve as inner values for the next tower level.
+
+### Tree-based search (`src/aeas/search.py`) — legacy
 
 Two algorithms share the same return type:
 `dict[int, list[tuple[float, ExprNode]]]` — depth → sorted list of
@@ -145,17 +196,11 @@ Two algorithms share the same return type:
 **`baseline_enumerate`** — BFS-style exhaustive generation. Caps at 50K
 expressions. Only useful for tiny limits (`max_nodes ≤ 7`, `max_depth ≤ 1`).
 
-**`beam_search`** — the primary algorithm. Per sqrt-depth level:
+**`beam_search`** — tree-enumeration beam search. Per sqrt-depth level:
 1. **Sqrt injection** — `sqrt(e)` for each pool member.
-2. **Immediate expansion** — new sqrt expressions × seed constants (builds
-   compound forms like `sqrt(x)+a`, `(sqrt(x))/b`), then sqrt × sqrt,
-   then compound × seeds (builds `(sqrt(x)+a)/b`).
+2. **Immediate expansion** — new sqrt expressions × seed constants.
 3. **General expansion** — pool × seeds, then top-N × top-N cross-product.
-   At depth > 0, explicitly includes sqrt-containing expressions in the
-   cross-product set.
-4. **Diversity-aware pruning** — reserves `beam_width / (3 * n_levels)` slots
-   per sqrt-depth level before filling remaining slots with overall best.
-   Prevents simple rationals from crowding out deeper constructible candidates.
+4. **Diversity-aware pruning** — reserves slots per sqrt-depth level.
 
 Sort key everywhere: `(error, node_count, canonical_string)` — fully deterministic.
 
@@ -185,15 +230,17 @@ each:
 
 ## Testing
 
-57 tests across 3 files. Run with `pytest tests/ -v`.
+101 tests across 5 files. Run with `pytest tests/ -v`.
 
 | File | What it covers |
 |------|---------------|
 | `test_expr.py` | sqrt_depth, node_count, hashing/equality, immutability, to_str |
 | `test_evaluate.py` | basic ops, sqrt, div-by-zero, sqrt-negative, nested invalids, compute_target |
 | `test_canonicalize.py` | commutative sorting, constant folding (incl. perfect-square sqrt), all identity rules, idempotence, hash consistency |
+| `test_chebyshev.py` | T_n recurrence, T_n(cos(2π/n))=1 identity, float/mpmath agreement, residuals |
+| `test_field_search.py` | squarefree generation, bounded rationals, best rational approx, tree builders (depth 1/2/correction), search format, quality (monotone improvement with depth), determinism |
 
-Each evaluate test auto-clears the eval cache via an `autouse` fixture.
+Each evaluate and field_search test auto-clears the eval cache via an `autouse` fixture.
 
 ## Key invariants an agent must preserve
 
@@ -212,10 +259,13 @@ Each evaluate test auto-clears the eval cache via an `autouse` fixture.
    substitute a default (like `abs(x)` for negative sqrt).
 6. **Constant folding boundary** — only fold when ALL children are CONST.
    Partial folding (e.g. `CONST+non-CONST`) is not performed; this is by design.
-7. **Results structure** — both search functions return
+7. **Results structure** — all three search functions return
    `dict[int, list[tuple[float, ExprNode]]]`. The CLI and plot scripts
    depend on this shape and on the JSONL field names
    (`n, depth, nodes, sqrt_depth, best_error, expression, runtime, seed, dps, rank`).
+8. **Field search two-phase invariant** — float pre-filtering must precede
+   tree materialisation.  Never build ExprNode trees for all candidates; only
+   materialise the top `beam_width * N` survivors from the float scoring phase.
 
 ## Common modification patterns
 
@@ -235,7 +285,18 @@ Pass `--const_set` on the CLI. In code, modify `DEFAULT_CONST_SET` in
 any rational reachable by combining seeds with `+−×÷` becomes a single CONST
 node.
 
-### Tuning beam search performance
+### Tuning field search performance
+
+- Increase `--max_height` for finer rational coefficients (quadratic cost).
+- Increase `--max_radicand` to search more number fields (linear cost).
+- Increase `--beam_width` to keep more candidates per level (linear cost).
+- The B-coefficient search window is `p_center ± hw` where hw=3 for small
+  denominators (q ≤ 6) and hw=2 for larger.  Widening improves quality but
+  increases the float pre-filter set.
+- The biquadratic refinement takes top 200 surds and tries C√n corrections
+  with all radicands — cap adjustable in `field_search()`.
+
+### Tuning beam search performance (legacy)
 
 - Increase `--beam_width` for better results (linear cost increase).
 - Increase `--max_nodes` to allow more complex expressions (combinatorial cost).
@@ -265,7 +326,14 @@ The search is structured by **sqrt-depth**: depth 0 = rationals,
 depth 1 = expressions using one level of `√`, depth 2 = nested `√(… √(…) …)`,
 etc. Higher depth = richer number field, potentially better approximations.
 
-Observed error magnitudes (beam_width=2000, max_nodes=15):
+Observed error magnitudes — field search (max_height=20, max_radicand=30,
+beam_width=2000):
+
+| n  | depth 0 | depth 1 | depth 2 | depth 3 |
+|----|---------|---------|---------|---------|
+| 7  | ~10⁻⁶  | ~10⁻⁷  | ~10⁻⁹  | ~10⁻¹⁰ |
+
+Observed error magnitudes — beam search (beam_width=2000, max_nodes=15):
 
 | n  | depth 0 | depth 1 | depth 2 |
 |----|---------|---------|---------|

@@ -20,6 +20,7 @@ if str(_root / "src") not in sys.path:
 
 from aeas.evaluate import compute_target  # noqa: E402
 from aeas.search import beam_search, baseline_enumerate  # noqa: E402
+from aeas.field_search import field_search  # noqa: E402
 
 
 def _parse_const_set(raw: str) -> list[Fraction]:
@@ -39,12 +40,24 @@ def main() -> None:
     ap.add_argument("--beam_width", type=int, default=2000)
     ap.add_argument("--dps", type=int, default=80)
     ap.add_argument("--seed", type=int, default=42)
-    ap.add_argument("--mode", choices=["beam", "baseline"], default="beam")
+    ap.add_argument("--mode", choices=["beam", "baseline", "field"], default="beam")
     ap.add_argument(
         "--const_set",
         type=str,
         default="0,1,-1,1/2,2,3/2,3,1/4,1/3",
-        help="Comma-separated rational constants",
+        help="Comma-separated rational constants (beam/baseline modes)",
+    )
+    ap.add_argument(
+        "--max_height",
+        type=int,
+        default=20,
+        help="Max numerator/denominator for rational coefficients (field mode)",
+    )
+    ap.add_argument(
+        "--max_radicand",
+        type=int,
+        default=30,
+        help="Largest squarefree radicand to search (field mode)",
     )
     ap.add_argument(
         "--output_root",
@@ -105,6 +118,8 @@ def main() -> None:
             "seed": args.seed,
             "mode": args.mode,
             "const_set": args.const_set,
+            "max_height": args.max_height,
+            "max_radicand": args.max_radicand,
             "top_k": args.top_k,
         },
     }
@@ -132,6 +147,20 @@ def main() -> None:
                 args.max_nodes,
                 beam_width=args.beam_width,
                 const_set=const_set,
+                dps=args.dps,
+                seed=args.seed,
+                progress=args.progress,
+            )
+        elif args.mode == "field":
+            field_max_nodes = max(args.max_nodes, 50)
+            res = field_search(
+                target,
+                n_val,
+                max_depth=args.max_depth,
+                max_height=args.max_height,
+                max_radicand=args.max_radicand,
+                max_nodes=field_max_nodes,
+                beam_width=args.beam_width,
                 dps=args.dps,
                 seed=args.seed,
                 progress=args.progress,
