@@ -1,0 +1,4 @@
+split,method,tasks,successes,median_error,median_log10_error,median_nodes,median_walltime_sec,total_walltime_sec,exact_rate,Cpath,source_path
+canb-transcend,aeas,5,5,3.46103295803e-08,-7.46079426507,11,1.26522879201,6.31152037601,0,0.0780777201949,benchmark/scores/aeas.csv
+canb-transcend,cf,5,5,2.01074561907e-05,-4.69664286885,1,0.000439416995505,0.00342204197659,0,0.167712638412,benchmark/scores/cf-transcend.csv
+canb-transcend,pslq,5,5,2.01074561907e-05,-4.69664286885,1,0.324944791006,1.632455666,0,0.0977017047701,benchmark/runs/pslq-canb-transcend/score.csv

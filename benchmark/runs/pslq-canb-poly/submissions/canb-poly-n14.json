@@ -1,0 +1,25 @@
+{
+  "budget": {
+    "max_evaluations": null,
+    "max_memory_mb": 2048.0,
+    "max_walltime_sec": 60.0
+  },
+  "error_selfreport_dps80": "2.12311074819e-5",
+  "expression": {
+    "ast": {
+      "op": "CONST",
+      "value": "91/101"
+    },
+    "format": "aeas-ast-v1"
+  },
+  "method": "pslq",
+  "metrics": {
+    "num_evaluations": 1,
+    "peak_memory_mb": 27.953125,
+    "walltime_sec": 0.32739395898533985
+  },
+  "notes": "relation_found=false; rational fallback denominator <= 200",
+  "status": "success",
+  "submitted_at": "2026-04-20T00:00:00Z",
+  "task_id": "canb-poly-n14"
+}

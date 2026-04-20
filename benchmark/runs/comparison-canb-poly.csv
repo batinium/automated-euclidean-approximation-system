@@ -1,0 +1,4 @@
+split,method,tasks,successes,median_error,median_log10_error,median_nodes,median_walltime_sec,total_walltime_sec,exact_rate,Cpath,source_path
+canb-poly,aeas,167,167,1.5910162142e-08,-7.79832539439,11,1.294890708,216.697012415,0,0.0828373977413,benchmark/runs/aeas-canb-poly/score.csv
+canb-poly,cf,167,167,0.000780690646428,-3.10752102395,1,0.000327415997162,0.0622614568856,0,0.114793178885,benchmark/scores/cf-poly.csv
+canb-poly,pslq,167,167,0.000780690646428,-3.10752102395,1,0.329378916998,55.0785755781,0,0.0666132337621,benchmark/runs/pslq-canb-poly/score.csv

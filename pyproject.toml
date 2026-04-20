@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Automated Euclidean Approximation System"
 requires-python = ">=3.11"
 dependencies = [
+    "jsonschema",
     "mpmath",
     "numpy",
     "matplotlib",

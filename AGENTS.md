@@ -31,9 +31,21 @@ report the best approximations.
 │   ├── evaluate.py           # mpmath evaluation with global result cache
 │   ├── search.py             # beam_search() and baseline_enumerate()
 │   ├── chebyshev.py          # Chebyshev polynomial T_n evaluation and residual
-│   └── field_search.py       # field_search() — normal-form quadratic-tower search
+│   ├── field_search.py       # field_search() — normal-form quadratic-tower search
+│   ├── ast_io.py             # CANB AST <-> ExprNode conversion
+│   ├── canb_adapter.py       # AEAS solve(task, budget) harness adapter
+│   ├── methods.py            # CANB method registry
+│   └── scoring.py            # CANB scoring utilities
+├── benchmark/
+│   ├── schema/               # task, submission, and AST JSON Schemas
+│   ├── tasks/                # generated CANB task JSON files
+│   ├── submissions/          # method outputs
+│   └── scores/               # scored CSV files
 ├── scripts/
 │   ├── run_search.py         # CLI entry point (argparse + rich output)
+│   ├── generate_benchmark.py # CANB task generator
+│   ├── run_benchmark.py      # CANB method runner
+│   ├── score_benchmark.py    # CANB scorer
 │   └── plot_results.py       # Reads results/ JSONL → matplotlib PNGs
 ├── tests/
 │   ├── test_expr.py          # ExprNode construction, depth, hashing, immutability
@@ -52,7 +64,7 @@ micromamba create -f aeas-env.yml && micromamba activate aeas
 pip install -e ".[dev]"       # editable install with pytest + sympy
 ```
 
-Python ≥ 3.11. Key runtime deps: `mpmath`, `numpy`, `matplotlib`, `pandas`,
+Python ≥ 3.11. Key runtime deps: `jsonschema`, `mpmath`, `numpy`, `matplotlib`, `pandas`,
 `rich`. Dev deps: `pytest`, `sympy`.
 
 ## Running
@@ -77,6 +89,27 @@ python scripts/plot_results.py --run n7-11-13_d3_nodes15_beam2000_YYYYMMDD-HHMMS
 # Tests (101 tests across 5 files)
 pytest tests/ -v
 ```
+
+## CANB harness
+
+The benchmark harness is additive. Do not change legacy AEAS internals to
+support CANB unless a helper can be added without altering old behavior.
+
+```bash
+python scripts/generate_benchmark.py --version 0.1 --seed 20260420 --split all --deterministic
+python scripts/run_benchmark.py --method aeas --split canb-transcend
+python scripts/score_benchmark.py --method aeas --split canb-transcend
+```
+
+Key files:
+- `benchmark/schema/*.schema.json` define task, submission, and AST formats.
+- `src/aeas/ast_io.py` is the only AST wire-format bridge; it lowers `NEG`
+  and `INV` to existing core `ExprNode` operations.
+- `src/aeas/canb_adapter.py` wraps `field_search()` in a subprocess guard for
+  walltime and evaluation-budget enforcement.
+- `src/aeas/methods.py` maps method names to `solve(task, budget)` callables.
+- `scripts/score_benchmark.py` never trusts self-reported errors; it
+  re-evaluates submitted ASTs at 1000 dps.
 
 ### CLI flags
 

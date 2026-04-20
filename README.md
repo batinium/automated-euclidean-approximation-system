@@ -1,38 +1,51 @@
-# Automated Euclidean Approximation System (AEAS)
+# AEAS + CANB
 
-AEAS searches constructible-number approximations to `cos(2π/n)` for non-constructible polygon sizes (notably `n=7,11,13`).
+**AEAS** — a field-first search for bounded-height constructible approximations to arbitrary real targets (nested-square-root expressions over `Q`).
+
+**CANB** — the Constructible Approximation Number Benchmark: standardized tasks + submission schema + Pareto scoring for comparing methods on this problem. AEAS is the reference method. See `report/benchmark_spec.md`.
+
+The original `cos(2π/n)` experiments for `n ∈ {7, 11, 13}` are preserved under `results/` and `report/archive/` and become the `canb-poly` subset in the new benchmark.
 
 ## Canonical docs
 
 - Agent/project instructions: `AGENTS.md`
-- Reproducible runbook: `runs.md`
-- Paper planning + handoff: `report/PLAN.md`
-- Manuscript draft: `report/aeas_paper.tex`
+- Reproducible runbook (legacy AEAS direct invocation): `runs.md`
+- Track A plan (benchmark reframing): `report/PLAN.md`
+- Executable roadmap: `report/ROADMAP.md`
+- Benchmark spec: `report/benchmark_spec.md`
+- Manuscript draft (benchmark + method paper): `report/aeas_paper.tex`
+- Publication audit: `audit.md`
+- Archived v1 (cos-only paper): `report/archive/`
 
 ## Quick start
 
 ```bash
 micromamba create -f aeas-env.yml
 micromamba activate aeas
-pip install -e .
+pip install -e ".[dev]"
 
-# one-command sequential rerun (core + visuals)
-bash scripts/rerun_all.sh --purge-results
+# CANB end-to-end smoke
+python scripts/generate_benchmark.py --version 0.1 --seed 20260420 --split all --deterministic
+python scripts/run_benchmark.py --method aeas --split canb-transcend
+python scripts/score_benchmark.py --method aeas --split canb-transcend
 ```
 
-Optional experiment extensions:
+Legacy AEAS direct runs are still available:
 
 ```bash
-# stronger robustness runs
-bash scripts/rerun_all.sh --purge-results --extra-experiments
+# one-command sequential rerun (core + visuals)
+bash scripts/rerun_all.sh --purge-results
 
-# parameter-justification sweeps
+# parameter-justification sweeps for the old cos-only study
 bash scripts/rerun_all.sh --purge-results --justification-experiments
 ```
 
 ## Core scripts
 
 - `scripts/run_search.py`: run one search configuration
+- `scripts/generate_benchmark.py`: generate CANB task JSON + manifest
+- `scripts/run_benchmark.py`: run a registered method over one CANB split
+- `scripts/score_benchmark.py`: re-evaluate submissions and emit score CSV
 - `scripts/plot_results.py`: generate per-run and multi-run plots
 - `scripts/analyse_scaling.py`: generate paper analysis tables/figures
 - `scripts/visualize_search.py`: architecture/tree/heatmap visuals

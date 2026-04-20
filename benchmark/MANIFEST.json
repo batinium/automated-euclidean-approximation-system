@@ -1,0 +1,1344 @@
+{
+  "benchmark": "CANB",
+  "deterministic": true,
+  "generator": "scripts/generate_benchmark.py",
+  "seed": 20260420,
+  "split": "all",
+  "task_count": 222,
+  "tasks": [
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n100",
+      "path": "tasks/canb-poly/canb-poly-n100.json",
+      "sha256": "669b16b5e0dde3285bc7438c95f8d6d297dbad29ceae58ded465debb3bed8f3a"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n101",
+      "path": "tasks/canb-poly/canb-poly-n101.json",
+      "sha256": "ba7b36e229f7f58665fd828df074e49b480ec14a9e07a146451d58e05d9de2b6"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n103",
+      "path": "tasks/canb-poly/canb-poly-n103.json",
+      "sha256": "c8351dff82fde5a75e0352242c8c45880488da1b0165633c379fa9e3aeb26cf8"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n104",
+      "path": "tasks/canb-poly/canb-poly-n104.json",
+      "sha256": "1877311b6debe07ee946fae6f4ace76a3b6acd94bb436c51b7f1a512ecb3b33e"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n105",
+      "path": "tasks/canb-poly/canb-poly-n105.json",
+      "sha256": "999c40eb309b975fff2f49da7b0f58b7fb5ad53fa0e048a80941459a1ce61903"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n106",
+      "path": "tasks/canb-poly/canb-poly-n106.json",
+      "sha256": "d99576412e2948c01b21c711534b3dfe17f4c5aa0b21c4e68130852089b20f1e"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n107",
+      "path": "tasks/canb-poly/canb-poly-n107.json",
+      "sha256": "ae77a08187b04608dc2f13f24dff224974dd1972146df2534b13e55e9f755942"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n108",
+      "path": "tasks/canb-poly/canb-poly-n108.json",
+      "sha256": "b2d745d5d0cbb6f3c63b165fd1b9d58c3b2555ae147ba71b8dc3997688490dae"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n109",
+      "path": "tasks/canb-poly/canb-poly-n109.json",
+      "sha256": "3c4474538ea031386d8bbd4c21b4f6f61bb6433abdc2c3d69af4289b255d8982"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n11",
+      "path": "tasks/canb-poly/canb-poly-n11.json",
+      "sha256": "977b3eb203e872395094a75121297412cd3dac6721aa8fd7fb14f94a62f5b727"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n110",
+      "path": "tasks/canb-poly/canb-poly-n110.json",
+      "sha256": "4d2186a9341b6860fba39543484fb31037bab512bb1f8f1a5a401b46c166e127"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n111",
+      "path": "tasks/canb-poly/canb-poly-n111.json",
+      "sha256": "196f62936ad29e806275e4d04bde6f9d5b72d1d8de710d268e109d06c7a73688"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n112",
+      "path": "tasks/canb-poly/canb-poly-n112.json",
+      "sha256": "624c3d930a3eeeceb23ee5883ab5c3f6dcfa2b8ace5834db92e88beda199cc42"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n113",
+      "path": "tasks/canb-poly/canb-poly-n113.json",
+      "sha256": "e85db517d6514140ec7a0269fa5fba7d60001c1a59bcb2a34e519f813aaa465e"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n114",
+      "path": "tasks/canb-poly/canb-poly-n114.json",
+      "sha256": "98883ef14d16d81777974c59bdf6266d6927aa72a4e85d09c98e311ec1321d5e"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n115",
+      "path": "tasks/canb-poly/canb-poly-n115.json",
+      "sha256": "7cbc6307a24e8d5b30503cd060ed812463bcf49c620594e3b3e71d8a4ca14866"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n116",
+      "path": "tasks/canb-poly/canb-poly-n116.json",
+      "sha256": "f9cfd004da46af6ddf716b1a75a2f05a5f1a7b1770d458466f534cbab425550c"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n117",
+      "path": "tasks/canb-poly/canb-poly-n117.json",
+      "sha256": "d0ad6b10515b6a8650d107e88b6d33c9979c1bfc3e1360293b362e131ae43ddc"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n118",
+      "path": "tasks/canb-poly/canb-poly-n118.json",
+      "sha256": "bdc831504e4fb78bad80741e34b1d303b1352ace5cc10d9a865e47af790ef107"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n119",
+      "path": "tasks/canb-poly/canb-poly-n119.json",
+      "sha256": "aece157e70fe1eacfd47082543904e9bdc4489e96dcfd9050b0aeb06999808b4"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n121",
+      "path": "tasks/canb-poly/canb-poly-n121.json",
+      "sha256": "3b55204ea72943b159184aca7933a24e9b49ebaad6fc4c0390126ee004ea7eac"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n122",
+      "path": "tasks/canb-poly/canb-poly-n122.json",
+      "sha256": "85f76ff76235eae8d928b0f7f4ffe0b299a3344c0e32dd7c637bf07c55d29fed"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n123",
+      "path": "tasks/canb-poly/canb-poly-n123.json",
+      "sha256": "d27e6f22d23a930ec4bf60d187f1f1bf1e8343a2a36d2308a797daea68f490dd"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n124",
+      "path": "tasks/canb-poly/canb-poly-n124.json",
+      "sha256": "9063de1c158feca12a242c4166e61040651b8f6277171b272a542c8d744cfcd1"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n125",
+      "path": "tasks/canb-poly/canb-poly-n125.json",
+      "sha256": "ee8d9647d0295597962c3b54638880cd6e24796fda6ff0b8883c8d05c361b8cc"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n126",
+      "path": "tasks/canb-poly/canb-poly-n126.json",
+      "sha256": "66040d23205b3b115da6f962c6f481685f11f105599b80771cce8e68637d8ed4"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n127",
+      "path": "tasks/canb-poly/canb-poly-n127.json",
+      "sha256": "4a43b72425fb33e8030818fe5413178236b53e715ea119f7863f1ba4c84a0ed7"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n129",
+      "path": "tasks/canb-poly/canb-poly-n129.json",
+      "sha256": "a1d17bb4f6d1b8b882ea911b209b16c79e21e6f1538608d80f57098a5219b07d"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n13",
+      "path": "tasks/canb-poly/canb-poly-n13.json",
+      "sha256": "9606d7ae653c3aa2f62e72eace2fde35bd87a426cfa503a764fa84f5b0df2d30"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n130",
+      "path": "tasks/canb-poly/canb-poly-n130.json",
+      "sha256": "f825e1ffa985c5c0bde8e877fb1bfbf936c09bcd4bc4c9411832f3b0ff64d29d"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n131",
+      "path": "tasks/canb-poly/canb-poly-n131.json",
+      "sha256": "e78dbd1e8c73a4582f8ea6fe8c884650b6de46760e7d43b3b01136ce6d4bbe80"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n132",
+      "path": "tasks/canb-poly/canb-poly-n132.json",
+      "sha256": "d7a558857b566890c0a0402bcc0db52b47306c1d1b6c48bb83083680560586dc"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n133",
+      "path": "tasks/canb-poly/canb-poly-n133.json",
+      "sha256": "8dc93ceb65917f1cf41f633b69804541eadf7ad33155f0402ea396138a26c6dc"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n134",
+      "path": "tasks/canb-poly/canb-poly-n134.json",
+      "sha256": "53e1ac072309d7890283fd119d37b2325e7526d21cf195c1fd1c3d48403ad006"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n135",
+      "path": "tasks/canb-poly/canb-poly-n135.json",
+      "sha256": "ad55b5d54934e41498d8656617775fd3309693b4735dd44d8f01a401b62b0a11"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n137",
+      "path": "tasks/canb-poly/canb-poly-n137.json",
+      "sha256": "f128779315e68e7ace76ddd4849af964748c169089f356f4ed29804f8f99a5a2"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n138",
+      "path": "tasks/canb-poly/canb-poly-n138.json",
+      "sha256": "eedcb921492dd96b788da5e3c755656c6caa5dbddcbbbceb1bf0bbd70a86aeac"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n139",
+      "path": "tasks/canb-poly/canb-poly-n139.json",
+      "sha256": "99beb7a65be84173df0f7341c256e12eefac0003bf03527bfd2c7663a61ef654"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n14",
+      "path": "tasks/canb-poly/canb-poly-n14.json",
+      "sha256": "5032cd2f43bed7087564b5f88ca3e7a8081c69cb37676b322accf34c244ef990"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n140",
+      "path": "tasks/canb-poly/canb-poly-n140.json",
+      "sha256": "c7b542491fd142021d91f514f0bc659dc64c88fb3c798812bba0af551a9fa865"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n141",
+      "path": "tasks/canb-poly/canb-poly-n141.json",
+      "sha256": "e546be5e12acee4c76fe33c9241ed20c2dfd1a659027c3a4195b8611c0dce26a"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n142",
+      "path": "tasks/canb-poly/canb-poly-n142.json",
+      "sha256": "38f5d37efd56e50c70293ded574098143e583bb8cece56d0378417ecbca11577"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n143",
+      "path": "tasks/canb-poly/canb-poly-n143.json",
+      "sha256": "c21bf13012161d9ec544a4cc50b22acc916eae5e2897e14ff92b51fa17224b44"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n144",
+      "path": "tasks/canb-poly/canb-poly-n144.json",
+      "sha256": "4ae4f52f58f0125a2ce6cc9b0fa34b46a00b9b8e9fe2692391019730d19afb25"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n145",
+      "path": "tasks/canb-poly/canb-poly-n145.json",
+      "sha256": "94de1572d087075233765b22299a186efe369e97f7ebbec18c1d319a7bd3fbd4"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n146",
+      "path": "tasks/canb-poly/canb-poly-n146.json",
+      "sha256": "b71cf0ead85769a19a94ea9b808521f6c90f7ed78af736b5edd279a2bc2e1605"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n147",
+      "path": "tasks/canb-poly/canb-poly-n147.json",
+      "sha256": "a6c3efee62103e90d24df589b6d097d983977115a4e3c3086450f3a5f8092a28"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n148",
+      "path": "tasks/canb-poly/canb-poly-n148.json",
+      "sha256": "18754d2f1d84527f8bcc9cce64ca5460a1d8bcddf6ea4cb633babf20dad8eddb"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n149",
+      "path": "tasks/canb-poly/canb-poly-n149.json",
+      "sha256": "193f8cbd57249d8130680e7eaeef93bb665b3c8b0d9bc191454cc9b7065abd3b"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n150",
+      "path": "tasks/canb-poly/canb-poly-n150.json",
+      "sha256": "40bcaa13a2ded1f528b9931175db09efd31830916cc455e11961fb3941c99280"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n151",
+      "path": "tasks/canb-poly/canb-poly-n151.json",
+      "sha256": "ebbc99cefa239f9e56dd0ecfe87d09d2c7414463232ff7399e64667243da8926"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n152",
+      "path": "tasks/canb-poly/canb-poly-n152.json",
+      "sha256": "1df6eccfe41ef61882d42e4fd6867055c22624b9e4a3d4e4c2125f64c972105e"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n153",
+      "path": "tasks/canb-poly/canb-poly-n153.json",
+      "sha256": "697e08093bbad7585e72bc71e657c6874466cbfe20e20e1e0fb7c8d8539d4744"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n154",
+      "path": "tasks/canb-poly/canb-poly-n154.json",
+      "sha256": "fc31f279ce9843498bac7bbdcd103e071be75de3929856dd99477bdcc803b6ff"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n155",
+      "path": "tasks/canb-poly/canb-poly-n155.json",
+      "sha256": "cc90cb814a2516fc0ef7bd6b001fbf9e54942fa6366f2b2f5f64c29c0da4fca4"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n156",
+      "path": "tasks/canb-poly/canb-poly-n156.json",
+      "sha256": "cc60f79a5b853d134c5fdaf8bffd1d1905f6199544f86a699107d37df3f63b9c"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n157",
+      "path": "tasks/canb-poly/canb-poly-n157.json",
+      "sha256": "6b920a460d343e6231d182e8131b25c3473c86d813a54cfe2a16d4133e2e7f70"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n158",
+      "path": "tasks/canb-poly/canb-poly-n158.json",
+      "sha256": "10a55fc3fbfcc01e8ab79a94287678932b50aab5162b2e925bc24ecb138d834c"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n159",
+      "path": "tasks/canb-poly/canb-poly-n159.json",
+      "sha256": "4a254f8c7aaa3a22800071da4ea81b17879d107e0f1be74127449aadbad38bea"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n161",
+      "path": "tasks/canb-poly/canb-poly-n161.json",
+      "sha256": "acb1271cb6b08b2fbcf2d134d8af94f78af6ed40e9754dbb60c8b803713ba416"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n162",
+      "path": "tasks/canb-poly/canb-poly-n162.json",
+      "sha256": "47ff860083e9143d8257727eb10e1ef20064e1234c1e2c7d1205381a069c1dac"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n163",
+      "path": "tasks/canb-poly/canb-poly-n163.json",
+      "sha256": "97302dd01dfeb7d340e0eded29bd5d77a03fa7d758dcd5d4af2cfc27c2a56b75"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n164",
+      "path": "tasks/canb-poly/canb-poly-n164.json",
+      "sha256": "0b3430a340374d6985e82da24522c1cd04d9286415053fa2ed4d8ffc5807b577"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n165",
+      "path": "tasks/canb-poly/canb-poly-n165.json",
+      "sha256": "f7271e422fd9dfab5e4cc4997fad8457eaca9c3b61aed43f5a59c7f269691212"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n166",
+      "path": "tasks/canb-poly/canb-poly-n166.json",
+      "sha256": "ee61a0f2376c45dded97386f8acd77dfc8c9ceab81d337cee4d6dc08ce3da725"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n167",
+      "path": "tasks/canb-poly/canb-poly-n167.json",
+      "sha256": "305e064fbf4107240198eff6d4e63573ece93e995c162d634f944c0f229c53e9"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n168",
+      "path": "tasks/canb-poly/canb-poly-n168.json",
+      "sha256": "ffc95b7bcb6d26116cc90a9bd7a0e43f14b6fcd37c694c9a0307f44ca7019b5d"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n169",
+      "path": "tasks/canb-poly/canb-poly-n169.json",
+      "sha256": "c7a8a4fa289993dd01a7635c93bcc8f8c4c40a7ae966d02d26846a2be354730f"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n171",
+      "path": "tasks/canb-poly/canb-poly-n171.json",
+      "sha256": "10538fb30b1f3dd09526c8f98fcfb43c624ed4b19ba3b97fdd8f2ed898f65ccd"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n172",
+      "path": "tasks/canb-poly/canb-poly-n172.json",
+      "sha256": "c6028f90ce2ec68ba51194c7ca0a834b36f051fa9f4d0f4851a7546ef48a207d"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n173",
+      "path": "tasks/canb-poly/canb-poly-n173.json",
+      "sha256": "5b1b80359ef7f8304f5e4a4a802aff7e417e46002baf95c4f08d348aa85f2d87"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n174",
+      "path": "tasks/canb-poly/canb-poly-n174.json",
+      "sha256": "3daea7f903227cc53588b571dd69604946229e8d561d687dfd62ee3418a98d93"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n175",
+      "path": "tasks/canb-poly/canb-poly-n175.json",
+      "sha256": "5048b1b23cf9878e3ff95a5ed9fff85e33ac4aa9027a21e63c4982dbba64eafd"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n176",
+      "path": "tasks/canb-poly/canb-poly-n176.json",
+      "sha256": "5931fcb06910867f185332e15f845f9bf54aeef905d64898df24519bda2d2a38"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n177",
+      "path": "tasks/canb-poly/canb-poly-n177.json",
+      "sha256": "edd6e156685a04771f488f960ee839afbd5b06c065b48ba767b2b1369f743198"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n178",
+      "path": "tasks/canb-poly/canb-poly-n178.json",
+      "sha256": "423aaecf708700de018fac1813bd8afb27bd145c66a318e48335347dff3cbcf6"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n179",
+      "path": "tasks/canb-poly/canb-poly-n179.json",
+      "sha256": "99b2b88a7a233735b350874639c3c48f608d99030edcf1cbab7af8f34b33854a"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n18",
+      "path": "tasks/canb-poly/canb-poly-n18.json",
+      "sha256": "fbc6ad7b3e007e551e756b9dfcf5a3ab145a4f92c5733c3963459d9991c501cc"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n180",
+      "path": "tasks/canb-poly/canb-poly-n180.json",
+      "sha256": "153648216b544231242eb0c6604365594c2c203ef85d47c25942ed36df0ff78d"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n181",
+      "path": "tasks/canb-poly/canb-poly-n181.json",
+      "sha256": "8bdc91f0b1048f496642db7797d34c9c7a74c570b78878f9cdcda3362696c94d"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n182",
+      "path": "tasks/canb-poly/canb-poly-n182.json",
+      "sha256": "ea82a36cadf2933eca652d8bd0913cd7a0a8ea22f51f095b4f3e1c1f7a380532"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n183",
+      "path": "tasks/canb-poly/canb-poly-n183.json",
+      "sha256": "a01472c6dca19c8fe1f228f1b3327ed2a495265e14dff2f23107eaee67aa1cd5"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n184",
+      "path": "tasks/canb-poly/canb-poly-n184.json",
+      "sha256": "e8665dcbcbff08720cc7a39ff08d0dfe69d32a45ed791965ff030160618a03ad"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n185",
+      "path": "tasks/canb-poly/canb-poly-n185.json",
+      "sha256": "cd96cf3323394cb6396f8fa57d226b147063c3d86b9dfc7e5e7f57e1bba51670"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n186",
+      "path": "tasks/canb-poly/canb-poly-n186.json",
+      "sha256": "023d0e59b659c41c89bc7ba098f8ae9f1226e3531a94859f5cd8ec391b266be2"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n187",
+      "path": "tasks/canb-poly/canb-poly-n187.json",
+      "sha256": "7cdecb6dcb87b656ff21369965cf6fab55cf1c0010042eb60df664799e9270b9"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n188",
+      "path": "tasks/canb-poly/canb-poly-n188.json",
+      "sha256": "46a895bf4315156aaec603b83b2435fb6ff58f863a68dbae51d68f7814bc79e9"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n189",
+      "path": "tasks/canb-poly/canb-poly-n189.json",
+      "sha256": "bd141976a2697c3d9b37a5d4ad21ba330c368ed239c94c9f8807a9ac2e72b25c"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n19",
+      "path": "tasks/canb-poly/canb-poly-n19.json",
+      "sha256": "84b14f0bc8ec381e0d870572cd7e0b74824bf96e4d041d5ba1ef3f6d2805cadc"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n190",
+      "path": "tasks/canb-poly/canb-poly-n190.json",
+      "sha256": "e82e28a1533acd03b823c161ad6d16d504f5587e41032e65a93ab01c6ad7ffba"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n191",
+      "path": "tasks/canb-poly/canb-poly-n191.json",
+      "sha256": "8157a9476aa99151373c22c12875b46bab517c4b70e603bc2e68d373b3320932"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n193",
+      "path": "tasks/canb-poly/canb-poly-n193.json",
+      "sha256": "96eb3f980e5566af69314750e1a53a89e7f03909fd4cee3773c0b4255b720e7c"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n194",
+      "path": "tasks/canb-poly/canb-poly-n194.json",
+      "sha256": "82ddf30a4279c5e97630e15308837826594f6e4e64b29e224427f8cceff19418"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n195",
+      "path": "tasks/canb-poly/canb-poly-n195.json",
+      "sha256": "edf9da90e65b8a631a062f6d3c2c3b91ab78d9b4704554171a34994f14cc8baf"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n196",
+      "path": "tasks/canb-poly/canb-poly-n196.json",
+      "sha256": "2e0f371aa1d0f5eb8cf5f0a82b9164a75c5f5cf78b3e4ae2f6c77897f840120c"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n197",
+      "path": "tasks/canb-poly/canb-poly-n197.json",
+      "sha256": "d9e66206c2efe2026fbf06ad6bc171c73b1a170362515e0f4993721007843a18"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n198",
+      "path": "tasks/canb-poly/canb-poly-n198.json",
+      "sha256": "bbaa8fe03061f5e133a33b9bf22d89ab14559edb5716957a8a9ceb83406ea682"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n199",
+      "path": "tasks/canb-poly/canb-poly-n199.json",
+      "sha256": "271d5ed75accc54f0aa6050128238703d235fb1e8e52e1492e55b515a542aee3"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n200",
+      "path": "tasks/canb-poly/canb-poly-n200.json",
+      "sha256": "afce30105420e6378b10d037dc7ce82ab025f50487e4a9f45fad6ab66451ac24"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n21",
+      "path": "tasks/canb-poly/canb-poly-n21.json",
+      "sha256": "35c509d902318e95bebe3ddfba75d074e621ec8ceaa3aa36ec4c488e31a36fa5"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n22",
+      "path": "tasks/canb-poly/canb-poly-n22.json",
+      "sha256": "7f206500230543237e79547a00639d373acf059fb8e5cc0ec4121f67cfcd9401"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n23",
+      "path": "tasks/canb-poly/canb-poly-n23.json",
+      "sha256": "5ca730863ae3c5bc2bbe86fd97a8dd0cd028c654273fd228244bbf89fb4588b4"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n25",
+      "path": "tasks/canb-poly/canb-poly-n25.json",
+      "sha256": "33e2a8a8ca6e81ea89a12522b11ca6189081c6d6a8f0e5d2fae01f761a72898f"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n26",
+      "path": "tasks/canb-poly/canb-poly-n26.json",
+      "sha256": "32ce7182b7ff57cbc4f8f8bcb7ab400a1c21342846457d18fea76b5356e63891"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n27",
+      "path": "tasks/canb-poly/canb-poly-n27.json",
+      "sha256": "4505b49fd307c79dce00baac7e4362ced14893ea09304d70d58c936ed36cace7"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n28",
+      "path": "tasks/canb-poly/canb-poly-n28.json",
+      "sha256": "93f4ee8e3264d9ad6129850850249db822c98a7d482687bd80b6dbef3cfe4002"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n29",
+      "path": "tasks/canb-poly/canb-poly-n29.json",
+      "sha256": "d3d58f4d4443ec5a99353a634c39a90b8114375bff8ed9906e7433ccfd4c178a"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n31",
+      "path": "tasks/canb-poly/canb-poly-n31.json",
+      "sha256": "a637cdd65b6a67b5acc272a19e30d96f9b59881a0fc0e248bb96a8342c4900a8"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n33",
+      "path": "tasks/canb-poly/canb-poly-n33.json",
+      "sha256": "77fe73976df29505925a23d713a13225b1f22cc58675de7e7762c2f0b07467c0"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n35",
+      "path": "tasks/canb-poly/canb-poly-n35.json",
+      "sha256": "bae84d73b7fe80ae4f694f346393f3a8521dcf0f33b723a3d349b07b910e3faa"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n36",
+      "path": "tasks/canb-poly/canb-poly-n36.json",
+      "sha256": "2c8abfbe4a8c4fe9111df24a47f1af4d3f5b3ebf3ec546b3531abceee3c056fa"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n37",
+      "path": "tasks/canb-poly/canb-poly-n37.json",
+      "sha256": "e86190f1405c34afafdd29a34032ec38c95ae1e8e67ed972f77f9375896b4901"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n38",
+      "path": "tasks/canb-poly/canb-poly-n38.json",
+      "sha256": "1b94af7087e33f7e03e834f16c3a2c0a27d8f4898819bcc5f39e45e18e28e352"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n39",
+      "path": "tasks/canb-poly/canb-poly-n39.json",
+      "sha256": "73060df94342dd241c4cee69938e13fbc14bdef5df092912c414117111506e8b"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n41",
+      "path": "tasks/canb-poly/canb-poly-n41.json",
+      "sha256": "39623a1b422887ffcd8c64dc5827a5a4008a0f208ecc180abf79be8097a27883"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n42",
+      "path": "tasks/canb-poly/canb-poly-n42.json",
+      "sha256": "c8bcf4a411f6878f4f57d9894c323172194f2414672e34229ed75f49167c9732"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n43",
+      "path": "tasks/canb-poly/canb-poly-n43.json",
+      "sha256": "9d2955c5007712df29b17bb2d2f13059c38ed8d4e53fdd63d78bcd5bc9ce30d6"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n44",
+      "path": "tasks/canb-poly/canb-poly-n44.json",
+      "sha256": "e9188ce649f8a93d0215150091fb759d9b39ecbe55e8e8cdec31fee4f040c44a"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n45",
+      "path": "tasks/canb-poly/canb-poly-n45.json",
+      "sha256": "6f25fede4cdcf86e1543fa83ddcc263ffb6909f09a3d8cbe8ee5d52e127b8ea6"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n46",
+      "path": "tasks/canb-poly/canb-poly-n46.json",
+      "sha256": "473cabd63d64ddd2352d712fd5cef8fe4a36796515d82ffe6deacdfa5b49047b"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n47",
+      "path": "tasks/canb-poly/canb-poly-n47.json",
+      "sha256": "f0d7c8b1d0e00e577ce64b573d4f787024cdadab4ed0637c1e179fc380a51224"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n49",
+      "path": "tasks/canb-poly/canb-poly-n49.json",
+      "sha256": "577a0edfed32087152357484c9135486f888c399f742780c2f9f62076c97dee4"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n50",
+      "path": "tasks/canb-poly/canb-poly-n50.json",
+      "sha256": "b1b05e2db4fa479c67413a193850af44402a02abcbfbe26dd039b408f7023d32"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n52",
+      "path": "tasks/canb-poly/canb-poly-n52.json",
+      "sha256": "ea8da6ab7be1feea0bf7b2d99e517228a3358c71edc81ccce94c1129c67dd48e"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n53",
+      "path": "tasks/canb-poly/canb-poly-n53.json",
+      "sha256": "0548bdc018101b11945e598006da5809b57f2d0aedb25686376a15addb77df6d"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n54",
+      "path": "tasks/canb-poly/canb-poly-n54.json",
+      "sha256": "f8ace34d717adf93b500ae05a4e14107554df4bf6f7fb24a76856ee699529a34"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n55",
+      "path": "tasks/canb-poly/canb-poly-n55.json",
+      "sha256": "c35a32b9f2dd35a2546533d28e4c5b58d6df308bd2eeb2e4df9300b37a3b88b3"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n56",
+      "path": "tasks/canb-poly/canb-poly-n56.json",
+      "sha256": "cf3f8aff98c46bb230346789f1ccf9ae789898f0c299364604e42036abc50dec"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n57",
+      "path": "tasks/canb-poly/canb-poly-n57.json",
+      "sha256": "8d559f0949db23243fccae19fb7315c1ebc5f56a4ec667db35642bf36f54fb1e"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n58",
+      "path": "tasks/canb-poly/canb-poly-n58.json",
+      "sha256": "1067d31e9d662fa847b8d46bea021e9d831e757b273942914256c82143fe13f0"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n59",
+      "path": "tasks/canb-poly/canb-poly-n59.json",
+      "sha256": "e28f63e42514f3bd27c2d092d8ba45d5034850731a425d7454a81b2b130a8666"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n61",
+      "path": "tasks/canb-poly/canb-poly-n61.json",
+      "sha256": "36bb4f29bee86d9afc6262697e20bc3677c2f7b78f55e1ae4f26a9f39a33d80e"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n62",
+      "path": "tasks/canb-poly/canb-poly-n62.json",
+      "sha256": "af44933c910f11fe585747a0ebe7476a8833a612da297c5718ebf8ab56f33eab"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n63",
+      "path": "tasks/canb-poly/canb-poly-n63.json",
+      "sha256": "092faf4ab3b81dc403d8ca0cd7e8d773f77ed2a8ec1da0cd7e906d0e4d619bb9"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n65",
+      "path": "tasks/canb-poly/canb-poly-n65.json",
+      "sha256": "273322906a44bd0325b863e37e5b3cb1be6957efddb4599c6c0764ed16a66819"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n66",
+      "path": "tasks/canb-poly/canb-poly-n66.json",
+      "sha256": "9d28b4318cd27e6e7ec9af20b0cb25c646280abea74e6eb230f51c2071ca9ee3"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n67",
+      "path": "tasks/canb-poly/canb-poly-n67.json",
+      "sha256": "74c87c84e412f0591680ea11510ac4a2c4f168958350315782b55984b7f1e298"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n69",
+      "path": "tasks/canb-poly/canb-poly-n69.json",
+      "sha256": "3948654d0159683458d26ec55ed3777a0e4fd2328065b160bad6c11ec48ead58"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n7",
+      "path": "tasks/canb-poly/canb-poly-n7.json",
+      "sha256": "b67e0669f58148eacca17cc8dec9318036d44082e17ef5b5e21ad6055b4dc6f1"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n70",
+      "path": "tasks/canb-poly/canb-poly-n70.json",
+      "sha256": "8598807fb464bc11944995d2ab4a39f22d91e2548967988dd9caea0833c072be"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n71",
+      "path": "tasks/canb-poly/canb-poly-n71.json",
+      "sha256": "c8314af0cf20ca856a4f1211f3f5829b714c79225df34ad275b2f51e27f472e1"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n72",
+      "path": "tasks/canb-poly/canb-poly-n72.json",
+      "sha256": "20135a108bdc9991ab9cd323cfcdbd39b50606bcd43c22c07effb42eddebe2bd"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n73",
+      "path": "tasks/canb-poly/canb-poly-n73.json",
+      "sha256": "586efa94226c727c55b39b5b7251f34a1a29f306ba282cb299a991969814b1ca"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n74",
+      "path": "tasks/canb-poly/canb-poly-n74.json",
+      "sha256": "be5d233c76c15d4534a947f6bced76b54467c89b407ee9c639ceebf45e0645a9"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n75",
+      "path": "tasks/canb-poly/canb-poly-n75.json",
+      "sha256": "c21a28601c716f18e0fe9590c1eef4533c4cdc40e298845acb99cee8064fc003"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n76",
+      "path": "tasks/canb-poly/canb-poly-n76.json",
+      "sha256": "4515da9728b511e97377fedb388f1c57f9a2cf2ee282dda374b0b0267b9e1049"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n77",
+      "path": "tasks/canb-poly/canb-poly-n77.json",
+      "sha256": "2810b9afed17c2987774e92f6539b55c6c61e5cd5db86263e607b086aaca3f3e"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n78",
+      "path": "tasks/canb-poly/canb-poly-n78.json",
+      "sha256": "4d75f9b7164f3037c246c4e677c5c0c99af585b66a7c4741668e7a3db0dbe4d0"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n79",
+      "path": "tasks/canb-poly/canb-poly-n79.json",
+      "sha256": "ab23667ed12987f21b315b35882bd0f339b6d106286e48f2e5f65af526d67fbc"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n81",
+      "path": "tasks/canb-poly/canb-poly-n81.json",
+      "sha256": "e74be68d187027d26612f6b1a1f627815c16d573a59c88a7d84bff58116aaa0f"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n82",
+      "path": "tasks/canb-poly/canb-poly-n82.json",
+      "sha256": "0825b0e1b79dd856619590b6b71a646e0031096036bf29625d747c463fc54f3f"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n83",
+      "path": "tasks/canb-poly/canb-poly-n83.json",
+      "sha256": "dcdf18469f6acd1740e8b3f03667a71425fba5ce0ecd10ab59137aaac0d9cf7a"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n84",
+      "path": "tasks/canb-poly/canb-poly-n84.json",
+      "sha256": "fc07944f8dae1d47b7d0a18f530ed0d1970252ba7818d9868f44e801781c27fb"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n86",
+      "path": "tasks/canb-poly/canb-poly-n86.json",
+      "sha256": "bd32054662050fb71680a4ab9ee55fb6cf25a0bf6141d103a362c32b3d4b979c"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n87",
+      "path": "tasks/canb-poly/canb-poly-n87.json",
+      "sha256": "2af1c9bd86ee9d913ff8b477defdb51b09e0f49196b70a612c6f8514c57bbc9c"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n88",
+      "path": "tasks/canb-poly/canb-poly-n88.json",
+      "sha256": "a7a1331298da78be97ad25e8f3a4001f51f0fb7929ffdb15d8ab55c07f4acaa0"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n89",
+      "path": "tasks/canb-poly/canb-poly-n89.json",
+      "sha256": "3c45e807abe0a033e92f6a65faafdd7338596a2286435a7aaccef8f99e164875"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n9",
+      "path": "tasks/canb-poly/canb-poly-n9.json",
+      "sha256": "269c440eda1c0f9129b72129e70bfa297d73cf857ea40647277dc1184440e128"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n90",
+      "path": "tasks/canb-poly/canb-poly-n90.json",
+      "sha256": "4df6e69d40b2d628d0f9c27e2a37cd029248b8aad362dd5af6460c28801b3055"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n91",
+      "path": "tasks/canb-poly/canb-poly-n91.json",
+      "sha256": "73aeb3b304c1de5d4122b8b27f9453e10be0670b5592d499c2e236537b26e0eb"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n92",
+      "path": "tasks/canb-poly/canb-poly-n92.json",
+      "sha256": "dc30e2287cc4f0614c8fa7ede7b74ae20daef8e1c46eabc874402293f07413c0"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n93",
+      "path": "tasks/canb-poly/canb-poly-n93.json",
+      "sha256": "68436c41d67047cc251bb97b632767e30818639a74d6ec21af7d272b39cc0d27"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n94",
+      "path": "tasks/canb-poly/canb-poly-n94.json",
+      "sha256": "967826d0c1419ae9a3be34f19e9c4e8f349a602734a297d37c764841e6215542"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n95",
+      "path": "tasks/canb-poly/canb-poly-n95.json",
+      "sha256": "64743a200343425e502ea95c78d50be96aed47d258543ac4a03bdb7c05eb6e3f"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n97",
+      "path": "tasks/canb-poly/canb-poly-n97.json",
+      "sha256": "7d520117d06d4a9d28159147db9626da9bfcb4f01da81ef5302aea81526299d2"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n98",
+      "path": "tasks/canb-poly/canb-poly-n98.json",
+      "sha256": "e58ec8ec534355c39ff107c9ddc86ed31547b9a3449024d75f8fd782b0659373"
+    },
+    {
+      "family": "canb-poly",
+      "id": "canb-poly-n99",
+      "path": "tasks/canb-poly/canb-poly-n99.json",
+      "sha256": "431117316eb470c20a70247728979d546d88dd5e875ced56f4ffbed65034e2b3"
+    },
+    {
+      "family": "canb-transcend",
+      "id": "canb-transcend-apery-zeta-3",
+      "path": "tasks/canb-transcend/canb-transcend-apery-zeta-3.json",
+      "sha256": "29c1e8f7b313b03064ffcff2b21a28e250c6b24522009d9a374d4b7b7a6b0316"
+    },
+    {
+      "family": "canb-transcend",
+      "id": "canb-transcend-e",
+      "path": "tasks/canb-transcend/canb-transcend-e.json",
+      "sha256": "296c046967ed512a36b4a44c0549de19b89ddc82ed0330d16024f71edd629091"
+    },
+    {
+      "family": "canb-transcend",
+      "id": "canb-transcend-euler-gamma",
+      "path": "tasks/canb-transcend/canb-transcend-euler-gamma.json",
+      "sha256": "d7511c6b4b033478629d68bd44f78939abd12c23b0c56576be44a068e8f7fb47"
+    },
+    {
+      "family": "canb-transcend",
+      "id": "canb-transcend-ln2",
+      "path": "tasks/canb-transcend/canb-transcend-ln2.json",
+      "sha256": "bfdd8b08ac727548fec0c0245164e167473c5347a45bb3303588193ba0e6af98"
+    },
+    {
+      "family": "canb-transcend",
+      "id": "canb-transcend-pi",
+      "path": "tasks/canb-transcend/canb-transcend-pi.json",
+      "sha256": "0b6723f473d3d225809f453151a481f8354fd3e8f4eadf26950bf3b7a45696d1"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p1-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p1-q11.json",
+      "sha256": "a852624db9f75512357099d47a9f8e6ec83e35ec761eb336e4be1915a84ada12"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p1-q13",
+      "path": "tasks/canb-trig/canb-trig-sin-p1-q13.json",
+      "sha256": "e6ff6becc705bd687deabf2a5fcd3aba80d30d52af9a37048e12ab7fa8f4a0f2"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p1-q7",
+      "path": "tasks/canb-trig/canb-trig-sin-p1-q7.json",
+      "sha256": "a6a98f3077d71b8ba3afb468eaf92587772772af2fbfb803985b4c1b42f49064"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p1-q9",
+      "path": "tasks/canb-trig/canb-trig-sin-p1-q9.json",
+      "sha256": "cfa037114202910839ac850eeeb0fc7a043f52b7eeaef68544bdb6161f422bd4"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p10-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p10-q11.json",
+      "sha256": "05357d72141bf2aafe3bc3d3ec3cefb556a9053920fd55cdc9affb62007ea941"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p2-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p2-q11.json",
+      "sha256": "6def66d034792739e72a9db1db648d93f94eb04ee8051cf65513c951a003d725"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p2-q13",
+      "path": "tasks/canb-trig/canb-trig-sin-p2-q13.json",
+      "sha256": "4ed1f22f91afb266629eba038a66efcac2f8a0d1da96af8126e15efb56fa2646"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p2-q7",
+      "path": "tasks/canb-trig/canb-trig-sin-p2-q7.json",
+      "sha256": "2d0aa01637764cd765485d9dad7aabad6500804f6e21a8306268adb382d17e5d"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p2-q9",
+      "path": "tasks/canb-trig/canb-trig-sin-p2-q9.json",
+      "sha256": "fc86195ee17bb0bbe4dcb698dcd110e2dc1c8d14ae0222e50757cf101e903d27"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p3-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p3-q11.json",
+      "sha256": "e5eff341d794a12e7bb4283d701d9d3c036fbe419b2ec55f1948c8ef416966d8"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p3-q13",
+      "path": "tasks/canb-trig/canb-trig-sin-p3-q13.json",
+      "sha256": "bb44574b619f90cf056cde43c6ca4e44c7847ac5777e9b31fc8a34d8a29c244d"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p3-q7",
+      "path": "tasks/canb-trig/canb-trig-sin-p3-q7.json",
+      "sha256": "7cea654504da0f6b440e2070f793d4b0d218a0e2c1454583134f3919e19a2fba"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p4-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p4-q11.json",
+      "sha256": "1bb889279de1338313e03753c5e999d73ce508b08c5a34819d93fac8af01cacf"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p4-q7",
+      "path": "tasks/canb-trig/canb-trig-sin-p4-q7.json",
+      "sha256": "8187255eb8e3990a0dfaaa03a9bc42a9c67763f05de40ed0987b8a9b26615709"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p4-q9",
+      "path": "tasks/canb-trig/canb-trig-sin-p4-q9.json",
+      "sha256": "ed3ec3896e7938788146b7261d8481c1b79b70ccef3b8bdf20783739ddc4a286"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p5-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p5-q11.json",
+      "sha256": "aa4da90e70ea62f4ba4c17281049929b363fcc4fd21421264526b1eb9a339077"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p5-q7",
+      "path": "tasks/canb-trig/canb-trig-sin-p5-q7.json",
+      "sha256": "ace4e4c85c93f5d3f7a539550e06d3aa12c6f5735e0166ed0d970bf367c36ad6"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p5-q9",
+      "path": "tasks/canb-trig/canb-trig-sin-p5-q9.json",
+      "sha256": "aaef427c75520293e9be7259296503ac862d729897738734af7505ae35e7ede6"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p6-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p6-q11.json",
+      "sha256": "a7049cb1c9a310d250c4273d1898117ec3ace08abaada4bd1b224c38e6f4186b"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p6-q7",
+      "path": "tasks/canb-trig/canb-trig-sin-p6-q7.json",
+      "sha256": "70f71ef48043b9f822359a78d83b67e62d495f3fd6c11805954d5514b2af7a68"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p7-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p7-q11.json",
+      "sha256": "a788f92712e15c52646c66a64dc1eccaff6ecbb99c813aaea874efa4af552e8c"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p7-q9",
+      "path": "tasks/canb-trig/canb-trig-sin-p7-q9.json",
+      "sha256": "1ebb73a9634e29fbc40796dd2dc9da206b8df39e12e5859c58d5794a552a9b87"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p8-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p8-q11.json",
+      "sha256": "c4664f0173e58ce9379c9bc3be9b1863e55ba1000d6a20b044855b102adeca35"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p8-q9",
+      "path": "tasks/canb-trig/canb-trig-sin-p8-q9.json",
+      "sha256": "b755ae56e9ab65b306696c0cc34e0c11a6a2e18627b8442d26223c1d3ce2b211"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-sin-p9-q11",
+      "path": "tasks/canb-trig/canb-trig-sin-p9-q11.json",
+      "sha256": "5efed33e73d913f77db8e79e40c79dff71f0ecab4437c14ef3bd039e85647abe"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p1-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p1-q11.json",
+      "sha256": "26f92c87af91e057b21dfc1f48b6bbbf4fe01e107348d6d78c54246c53f81f16"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p1-q13",
+      "path": "tasks/canb-trig/canb-trig-tan-p1-q13.json",
+      "sha256": "378e48fed6bcadb45d22dd6f818627b32176cdf092e1cd89458f18a9785eacab"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p1-q7",
+      "path": "tasks/canb-trig/canb-trig-tan-p1-q7.json",
+      "sha256": "1784d49f4c4638d4eba090d1e046a5f1aedea8757a7835b10d54003367b1b0e9"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p1-q9",
+      "path": "tasks/canb-trig/canb-trig-tan-p1-q9.json",
+      "sha256": "6697ed5591f26ec59164a8011ac7bdec5ad8cf0c0e317a455a09f512ebbd68ea"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p10-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p10-q11.json",
+      "sha256": "af4953bea0af25354da85a343072463075cf4f7f5eb652a8ba633bdb1c936c00"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p2-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p2-q11.json",
+      "sha256": "955e126f767aa749ec1c662304af35e6fde96e7229f97adf0292c17ab4553432"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p2-q13",
+      "path": "tasks/canb-trig/canb-trig-tan-p2-q13.json",
+      "sha256": "1d0e89fe579ce3965d0d22f63451ff321df9c3b11ce55e1e530131b4f7469198"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p2-q7",
+      "path": "tasks/canb-trig/canb-trig-tan-p2-q7.json",
+      "sha256": "48c900c75a774e911afb92b6eda3141491af21c0c1260215ee56ca2cb579bbf2"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p2-q9",
+      "path": "tasks/canb-trig/canb-trig-tan-p2-q9.json",
+      "sha256": "2a5646f756e762035c25d03ce7d72e247ce73c362114f28b462b19866680d4db"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p3-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p3-q11.json",
+      "sha256": "3aec2a049d48159ddda95cd2e196faad37aa3377f17f894528058716dccd4135"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p3-q13",
+      "path": "tasks/canb-trig/canb-trig-tan-p3-q13.json",
+      "sha256": "4731acea039b033ef66905bc84dd90ada4776c8ea6aa54a83a1aaba912d727c1"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p3-q7",
+      "path": "tasks/canb-trig/canb-trig-tan-p3-q7.json",
+      "sha256": "c5f40de674b8f98c7b859e5fe685b7ef08d2585f53723edf6b8d10f66082f484"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p4-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p4-q11.json",
+      "sha256": "e7ae5c4154eb9fbecb9b2502c330be1c4f6806e115969f6db93169daa15f265a"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p4-q7",
+      "path": "tasks/canb-trig/canb-trig-tan-p4-q7.json",
+      "sha256": "31a5cebb46cdf3cc29d157984cbd2db926291c0278970a78789c2f50b83dc20f"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p4-q9",
+      "path": "tasks/canb-trig/canb-trig-tan-p4-q9.json",
+      "sha256": "7e19e96efde728f67fbe3e9e02ebdb28baddbb4878ad4274c126554d12f31adb"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p5-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p5-q11.json",
+      "sha256": "64a74c4e1c29dd860bfae8100683056b95f812d4e8852c9c6b8abb241a59c96b"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p5-q7",
+      "path": "tasks/canb-trig/canb-trig-tan-p5-q7.json",
+      "sha256": "fa69ff4caaac477f510825852e0ce59deab38ef315408ca6688ab713c6c14b8c"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p5-q9",
+      "path": "tasks/canb-trig/canb-trig-tan-p5-q9.json",
+      "sha256": "1e3d860cebc0e87ca1a81570016d03a1d786939c65ff8c8f7f382a53492751ac"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p6-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p6-q11.json",
+      "sha256": "0d2f463554a2fd3b2ec65634fc08404f09e833b39b371a590666b4af662e92fd"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p6-q7",
+      "path": "tasks/canb-trig/canb-trig-tan-p6-q7.json",
+      "sha256": "537ddebb23ec6791be8a5625f1e555a26bcf5e6df6e43b121997007cd3bb2969"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p7-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p7-q11.json",
+      "sha256": "1df85d0f05630523969df16fe5684100dc65009ff60f6944998b8c34bbfdd2f0"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p7-q9",
+      "path": "tasks/canb-trig/canb-trig-tan-p7-q9.json",
+      "sha256": "39c24152b50201fde74b8321baba149dfc5fbec7fc4d973e289552e93bc1ba51"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p8-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p8-q11.json",
+      "sha256": "9b1418af742253c7e7134e8df876d080af35d8e62ca1e31bd4762b3002dc0873"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p8-q9",
+      "path": "tasks/canb-trig/canb-trig-tan-p8-q9.json",
+      "sha256": "28bfa39b3821361a37dd9dc9293015137c6b17ee19c56f137226bf062dea03a1"
+    },
+    {
+      "family": "canb-trig",
+      "id": "canb-trig-tan-p9-q11",
+      "path": "tasks/canb-trig/canb-trig-tan-p9-q11.json",
+      "sha256": "f52db9a1165f9a86fa6b6421e77a657472cf135e9ef812e8a2492cc4dde2d6aa"
+    }
+  ],
+  "timestamp": "2026-04-20T00:00:00Z",
+  "version": "0.1"
+}

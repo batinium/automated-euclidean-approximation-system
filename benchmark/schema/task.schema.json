@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://canb.example/schema/task.schema.json",
+  "title": "CANB Task v0.1",
+  "type": "object",
+  "required": [
+    "id",
+    "family",
+    "target_description",
+    "target_spec",
+    "reference_value_dps",
+    "reference_value",
+    "known_closed_form",
+    "difficulty_tier",
+    "notes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^canb-[a-z0-9-]+$"
+    },
+    "family": {
+      "enum": [
+        "canb-poly",
+        "canb-algdeg",
+        "canb-nestedref",
+        "canb-transcend",
+        "canb-trig",
+        "canb-rand"
+      ]
+    },
+    "target_description": {"type": "string", "minLength": 1},
+    "target_spec": {"$ref": "#/definitions/target_spec"},
+    "reference_value_dps": {"type": "integer", "minimum": 1},
+    "reference_value": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "known_closed_form": {
+      "type": ["null", "string", "object"]
+    },
+    "difficulty_tier": {"enum": [1, 2, 3, 4]},
+    "notes": {"type": "string"}
+  },
+  "definitions": {
+    "rational_angle_kind": {
+      "enum": [
+        "cos_of_rational_pi",
+        "sin_of_rational_pi",
+        "tan_of_rational_pi"
+      ]
+    },
+    "target_spec": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "arg"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {"$ref": "#/definitions/rational_angle_kind"},
+            "arg": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": [
+                {"type": "integer"},
+                {"type": "integer", "not": {"const": 0}}
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "coefficients", "real_root_index"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {"const": "root_of_polynomial"},
+            "coefficients": {
+              "type": "array",
+              "minItems": 2,
+              "items": {"type": "integer"}
+            },
+            "real_root_index": {"type": "integer", "minimum": 0}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "name"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {"const": "literal_transcendental"},
+            "name": {
+              "enum": ["pi", "e", "ln2", "euler_gamma", "apery", "apery_zeta_3"]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "expression"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {"const": "ramanujan_radical"},
+            "expression": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "seed", "degree", "conductor_bound"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {"const": "random_algebraic"},
+            "seed": {"type": "integer"},
+            "degree": {"type": "integer", "minimum": 1},
+            "conductor_bound": {"type": "integer", "minimum": 1}
+          }
+        }
+      ]
+    }
+  }
+}

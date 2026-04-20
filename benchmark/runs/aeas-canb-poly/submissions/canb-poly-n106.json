@@ -1,0 +1,71 @@
+{
+  "budget": {
+    "max_evaluations": null,
+    "max_memory_mb": 2048.0,
+    "max_walltime_sec": 60.0
+  },
+  "error_selfreport_dps80": "4.00070063837e-8",
+  "expression": {
+    "ast": {
+      "args": [
+        {
+          "args": [
+            {
+              "op": "CONST",
+              "value": "23/7"
+            },
+            {
+              "args": [
+                {
+                  "args": [
+                    {
+                      "args": [
+                        {
+                          "op": "CONST",
+                          "value": "5/6"
+                        },
+                        {
+                          "args": [
+                            {
+                              "op": "CONST",
+                              "value": "3/1"
+                            }
+                          ],
+                          "op": "SQRT"
+                        }
+                      ],
+                      "op": "MUL"
+                    },
+                    {
+                      "op": "CONST",
+                      "value": "-4/9"
+                    }
+                  ],
+                  "op": "ADD"
+                }
+              ],
+              "op": "SQRT"
+            }
+          ],
+          "op": "MUL"
+        },
+        {
+          "op": "CONST",
+          "value": "-16/7"
+        }
+      ],
+      "op": "ADD"
+    },
+    "format": "aeas-ast-v1"
+  },
+  "method": "aeas",
+  "metrics": {
+    "num_evaluations": 6258,
+    "peak_memory_mb": 27.46875,
+    "walltime_sec": 1.2534057500015479
+  },
+  "notes": "AEAS field-first adapter",
+  "status": "success",
+  "submitted_at": "2026-04-20T00:00:00Z",
+  "task_id": "canb-poly-n106"
+}

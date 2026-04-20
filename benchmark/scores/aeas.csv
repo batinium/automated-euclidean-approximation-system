@@ -1,0 +1,7 @@
+row_type,task_id,family,method,status,error,log10_error,node_count,walltime_sec,hypervolume,exact,best_error_median_log10,win_rate_60s,exact_rate,size_at_best_median,expression
+task,canb-transcend-apery-zeta-3,canb-transcend,aeas,success,4.37942784287167321e-8,-7.35858262486,11,1.236087292,0.0776130670855,False,,,,,(((7/6) * sqrt((((7/12) * sqrt(10)) + (-9/14)))) + (-1/13))
+task,canb-transcend-e,canb-transcend,aeas,success,1.11897067766832563e-8,-7.95118129389,11,1.26522879201,0.0835715221348,False,,,,,(((14/9) * sqrt((((5/16) * sqrt(21)) + (9/7)))) + (2/13))
+task,canb-transcend-euler-gamma,canb-transcend,aeas,success,3.46103295802617799e-8,-7.46079426507,11,1.27902687501,0.0782897982123,False,,,,,(((41/13) * sqrt((((4/15) * sqrt(13)) + (-5/13)))) + (-20/11))
+task,canb-transcend-ln2,canb-transcend,aeas,success,1.96532375532032411e-8,-7.7065658964,11,1.28940037498,0.0807707418999,False,,,,,(((26/11) * sqrt((((-1/6) * sqrt(6)) + (11/10)))) + (-14/11))
+task,canb-transcend-pi,canb-transcend,aeas,success,2.21336845085555748e-7,-6.65494628474,11,1.24177704201,0.070143471642,False,,,,,(((14/9) * sqrt((((5/9) * sqrt(14)) + (17/16)))) + (5/13))
+summary,SUMMARY,,aeas,,,,,,0.0780777201949,,-7.46079426507,nan,0,11,

@@ -1,0 +1,6 @@
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.0005389821866023103, "expression": "(38/61)", "runtime": 0.015, "seed": 42, "dps": 80, "rank": 1}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.0015101981412665166, "expression": "(5/8)", "runtime": 0.015, "seed": 42, "dps": 80, "rank": 2}
+{"n": 7, "depth": 0, "nodes": 1, "sqrt_depth": 0, "best_error": 0.023489801858733506, "expression": "(3/5)", "runtime": 0.015, "seed": 42, "dps": 80, "rank": 3}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 0.00022598221508429717, "expression": "(((8/7) * sqrt(7)) + (-12/5))", "runtime": 0.015, "seed": 42, "dps": 80, "rank": 1}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 0.0002636548797508853, "expression": "(((7/8) * sqrt(5)) + (-4/3))", "runtime": 0.015, "seed": 42, "dps": 80, "rank": 2}
+{"n": 7, "depth": 1, "nodes": 6, "sqrt_depth": 1, "best_error": 0.0002664971553704154, "expression": "(((-1/8) * sqrt(2)) + (4/5))", "runtime": 0.015, "seed": 42, "dps": 80, "rank": 3}

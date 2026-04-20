@@ -1,0 +1,7 @@
+row_type,task_id,family,method,status,error,log10_error,node_count,walltime_sec,hypervolume,exact,best_error_median_log10,win_rate_60s,exact_rate,size_at_best_median,expression
+task,canb-transcend-apery-zeta-3,canb-transcend,cf,success,0.0000156357005093415433,-4.80588265676,1,0.00120733398944,0.158011349594,False,,,,,(232/193)
+task,canb-transcend-e,canb-transcend,cf,success,0.0000280306958843421045,-4.5523661204,1,0.000436665985035,0.151745537347,False,,,,,(193/71)
+task,canb-transcend-euler-gamma,canb-transcend,cf,success,0.0000201074561907166293,-4.69664286885,1,0.000943833001656,0.156554762295,False,,,,,(71/123)
+task,canb-transcend-ln2,canb-transcend,cf,success,0.0000254874382521877241,-4.59367381337,1,0.000439416995505,0.153122460446,False,,,,,(131/189)
+task,canb-transcend-pi,canb-transcend,cf,success,2.66764189062422312e-7,-6.57387247137,1,0.000394792004954,0.219129082379,False,,,,,(355/113)
+summary,SUMMARY,,cf,,,,,,0.167712638412,,-4.69664286885,nan,0,1,
